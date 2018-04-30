@@ -3,14 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lst.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adibou <adibou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 17:37:13 by abezanni          #+#    #+#             */
-/*   Updated: 2018/04/25 18:08:02 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/04/30 12:42:11 by adibou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem-in.h"
+
+/*
+**  Détruis les listes
+*/
+
+t_bool	ft_destroy(t_lst *lst)
+{
+	t_lst *tmp;
+
+	while (lst)
+	{
+		tmp = lst->next;
+		free(lst->str);
+		free(lst);
+		lst = tmp;
+	}
+	return (FALSE);
+}
+
+/*
+**  Libère les éléments un par un
+*/
+
+void	ft_free_item(t_lst **lst)
+{
+	t_lst *tmp;
+
+	tmp = *lst;
+	*lst = (*lst)->next;
+	free(tmp->str);
+	free(tmp);
+}
+
+/*
+**  Créé un nouvel élément de type lst
+*/
 
 t_lst	*ft_lst_new(char *str)
 {
@@ -22,6 +58,10 @@ t_lst	*ft_lst_new(char *str)
 	lst->next = NULL;
 	return (lst);
 }
+
+/*
+**  Envoie un élément a la fin de ma liste
+*/
 
 void	ft_lst_pushback(t_lst **begin, t_lst *to_add)
 {

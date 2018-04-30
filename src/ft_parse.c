@@ -3,100 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adibou <adibou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 18:34:16 by abezanni          #+#    #+#             */
-/*   Updated: 2018/04/25 20:13:49 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/04/30 12:41:57 by adibou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem-in.h"
 
-void	ft_free_item(t_lst **lst)
-{
-	t_lst *tmp;
-
-	tmp = *lst;
-	*lst = (*lst)->next;
-	free(tmp->str);
-	free(tmp);
-}
-
-t_bool	ft_init_room(char *str, int i_r, t_room *room, t_lst **to_null)
-{
-	int		i;
-	char	*first;
-	char	*second;
-	char	*third;
-
-	if (to_null)
-		*to_null = NULL;
-	second = NULL;
-	third = NULL;
-	first = NULL;
-	i = 0;
-	while (str[i])
-	{
-		if ((i == 0 || !first) && !ft_isspace(str[i]))
-			first = str + i;
-		else if (ft_isspace(str[i]) && !ft_isspace(str[i + 11]))
-		{
-			if (!second)
-				second = str + i + 1;
-			else if (!third)
-				third = str + i + 1;
-		}
-		if (ft_isspace(str[i]))
-			str[i] = 0;
-		i++;
-	}
-	if (*first == 'L')
-		return (FALSE);
-	if (!(ft_check_int(&(room[i_r].pos[0]), second) && ft_check_int(&(room[i_r].pos[1]), third)))
-		return (FALSE);
-	room[i_r].name = ft_strdup(first);
-	room[i_r].num_room = i_r;
-	return (TRUE);
-}
-
-int		ft_count_rooms(t_lst *lst)
-{
-	int		nbr_rooms;
-
-	nbr_rooms = 0;
-	while (ft_nbr_words_charset(lst->str, " \t") == 3)
-	{
-		nbr_rooms++;
-		lst = lst->next;
-	}
-	return (nbr_rooms);
-}
-
-t_bool	ft_check_rooms(t_data *data, t_lst **lst, t_lst *begin, t_lst *end)
-{
-	int		nbr_rooms;
-	int		i;
-
-	ft_free_item(lst);
-	if ((nbr_rooms = ft_count_rooms(*lst)) < 2)
-		return (FALSE);
-	if (!(data->rooms = malloc(sizeof(t_room) * nbr_rooms)))
-		return (FALSE);
-	i = 0;
-	data->last = nbr_rooms - 1;
-	while (i < nbr_rooms)
-	{
-		if (*lst == begin)
-			ft_init_room((*lst)->str, 0, data->rooms, &begin);
-		else if (*lst == end)
-			ft_init_room((*lst)->str, data->last, data->rooms, &end);
-		else
-			ft_init_room((*lst)->str, begin ? i + 1 : i, data->rooms, NULL);
-		ft_free_item(lst);
-		i++;
-	}
-	return (TRUE);
-}
+/*
+**  Verifie si c'est un int positif
+*/
 
 t_bool	ft_check_int(int *value, char *str)
 {
@@ -110,5 +28,63 @@ t_bool	ft_check_int(int *value, char *str)
 		!ft_strisall(*str == '+' ? str + 1 : str, ISDIGIT))
 		return (FALSE);
 	*value = ft_atoi(str);
+	return (TRUE);
+}
+
+/*
+**  Récupère les lignes dans une liste chainée
+*/
+t_bool	ft_get_lines(int fd, t_lst **lst, t_lst **begin, t_lst **end)
+{
+	char *line;
+
+	while (get_next_line(fd, &line))
+	{
+		if (!ft_strcmp("##start", line))
+		{
+			free(line);
+			if (!get_next_line(fd, &line))
+				return (ft_destroy(*lst));
+			*begin = ft_lst_new(line);
+			ft_lst_pushback(lst, *begin);
+		}
+		else if (!ft_strcmp("##end", line))
+		{
+			free(line);
+			if (!get_next_line(fd, &line))
+				return (ft_destroy(*lst));
+			*end = ft_lst_new(line);
+			ft_lst_pushback(lst, *end);
+		}
+		else
+			ft_lst_pushback(lst, ft_lst_new(line));
+	}
+	return (TRUE);
+}
+
+/*
+**  Lis le fichier envoyé en paramètre, le test et retourne les
+**  données s'il est valide
+*/
+
+t_bool	ft_parse(char *name, t_data *data)
+{
+	int		fd;
+	t_lst	*lst;
+	t_lst	*begin;
+	t_lst	*end;
+
+	fd = open(name, O_RDONLY);
+	lst = NULL;
+	begin = NULL;
+	end = NULL;
+	if (!(ft_get_lines(fd, &lst, &begin, &end)))
+		return (FALSE);
+	if (!begin || !end || !lst)
+		return (ft_destroy(lst));
+	if (!ft_check_int(&(data->nbr_ant), lst->str))
+		return (ft_destroy(lst));
+	if (!(ft_check_rooms(data, &lst, begin, end)))
+		return (ft_destroy(lst));
 	return (TRUE);
 }
