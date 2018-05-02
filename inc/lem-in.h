@@ -6,7 +6,7 @@
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 16:06:51 by abezanni          #+#    #+#             */
-/*   Updated: 2018/05/02 16:41:08 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/05/02 18:14:28 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,12 @@ typedef struct	s_data
 	int			*wayout;
 	t_room		**rooms;
 }				t_data;
+
+/*
+**	ft_check_links.c
+*/
+
+t_bool	ft_check_links(t_data *data, t_lst *lst);
 
 /*
 **	ft_lst.c

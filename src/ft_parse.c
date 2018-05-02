@@ -6,7 +6,7 @@
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 18:34:16 by abezanni          #+#    #+#             */
-/*   Updated: 2018/05/02 17:22:44 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/05/02 18:15:12 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,19 @@ void	ft_print_data_lst(t_lst *lst, t_data *data)
 	ft_putendl("");
 }
 
+void	ft_print_data(t_data *data)
+{
+	t_room **test;
+	int i;
+
+	test = data->rooms;
+	i = 0;
+	while (i < data->nbr_rooms)
+	{
+		ft_putnbrendl(test[i++]->nbr_link);
+	}
+}
+
 /*
 **  Lis le fichier envoyé en paramètre, le test et retourne les
 **  données s'il est valide
@@ -146,6 +159,11 @@ t_bool	ft_parse(char *name, t_data *data)
 	ft_putendl("Les fourmiiiiies");
 	if (!(ft_check_rooms(data, &lst)))
 		return (ft_destroy(lst));
+	ft_putendl("Les salles sont pretes");
+	ft_print_data_lst(lst, data);
+	if (!(ft_check_links(data, lst)))
+		return (ft_destroy(lst));
+	ft_print_data(data);
 	ft_putendl("Les salles sont pretes");
 	return (TRUE);
 }

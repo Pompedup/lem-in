@@ -6,7 +6,7 @@
 #    By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/25 16:13:40 by abezanni          #+#    #+#              #
-#    Updated: 2018/05/02 12:06:38 by abezanni         ###   ########.fr        #
+#    Updated: 2018/05/02 18:15:00 by abezanni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,11 @@ CC = gcc
 
 SRC = $(addprefix src/,$(SRC_NAME))
 
-SRC_NAME =	lem-in.c ft_lst.c ft_parse.c ft_check_rooms.c
+SRC_NAME =	lem-in.c\
+			ft_lst.c\
+			ft_parse.c\
+			ft_check_rooms.c\
+			ft_check_links.c\
 
 #SRC_NAME1 =
 
