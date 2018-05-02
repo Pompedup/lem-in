@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lst.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adibou <adibou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 17:37:13 by abezanni          #+#    #+#             */
-/*   Updated: 2018/04/30 12:42:11 by adibou           ###   ########.fr       */
+/*   Updated: 2018/05/02 14:25:21 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,15 @@ void	ft_free_item(t_lst **lst)
 **  Créé un nouvel élément de type lst
 */
 
-t_lst	*ft_lst_new(char *str)
+t_lst	*ft_lst_new(char *str, int passage)
 {
 	t_lst *lst;
 
 	if (!(lst = malloc(sizeof(t_lst))))
 		return (NULL);
 	lst->str = str;
+	lst->entrance = passage % 2;
+	lst->exit = passage / 2;
 	lst->next = NULL;
 	return (lst);
 }

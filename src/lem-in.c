@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem-in.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adibou <adibou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 15:13:14 by abezanni          #+#    #+#             */
-/*   Updated: 2018/04/30 12:42:03 by adibou           ###   ########.fr       */
+/*   Updated: 2018/05/02 14:46:43 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 int		ft_invalide_file(void)
 {
-	ft_putendl("ERROR");
+	ft_putendl_fd("ERROR", 2);
 	return (0);
 }
 
