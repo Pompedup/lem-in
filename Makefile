@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+         #
+#    By: adibou <adibou@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/25 16:13:40 by abezanni          #+#    #+#              #
-#    Updated: 2018/04/25 18:43:53 by abezanni         ###   ########.fr        #
+#    Updated: 2018/04/30 12:49:58 by adibou           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ CC = gcc
 SRC = $(addprefix src/,$(SRC_NAME))
 
 SRC_NAME =	lem-in.c\
+			ft_check_rooms.c\
 			ft_lst.c\
 			ft_parse.c\
 

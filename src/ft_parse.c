@@ -6,7 +6,7 @@
 /*   By: adibou <adibou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 18:34:16 by abezanni          #+#    #+#             */
-/*   Updated: 2018/04/30 12:41:57 by adibou           ###   ########.fr       */
+/*   Updated: 2018/04/30 16:13:31 by adibou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,28 @@ t_bool	ft_check_int(int *value, char *str)
 }
 
 /*
+**	Enregistre le begin ou le end
+*/
+
+t_bool	ft_register_b_or_e(t_lst **lst, t_lst **b_or_e, char *line, int fd)
+{
+	free(line);
+	if (!get_next_line(fd, &line))
+		return (ft_destroy(*lst));
+	if (ft_nbr_words_charset(line, " \t") != 3)
+	{
+		free(line);
+		return (ft_destroy(*lst));
+	}
+	*b_or_e = ft_lst_new(line);
+	ft_lst_pushback(lst, *b_or_e);
+	return (TRUE);
+}
+
+/*
 **  Récupère les lignes dans une liste chainée
 */
+
 t_bool	ft_get_lines(int fd, t_lst **lst, t_lst **begin, t_lst **end)
 {
 	char *line;
@@ -42,20 +62,16 @@ t_bool	ft_get_lines(int fd, t_lst **lst, t_lst **begin, t_lst **end)
 	{
 		if (!ft_strcmp("##start", line))
 		{
-			free(line);
-			if (!get_next_line(fd, &line))
-				return (ft_destroy(*lst));
-			*begin = ft_lst_new(line);
-			ft_lst_pushback(lst, *begin);
+			if (!(ft_register_b_or_e(lst, begin, line, fd)))
+				return (FALSE);
 		}
 		else if (!ft_strcmp("##end", line))
 		{
-			free(line);
-			if (!get_next_line(fd, &line))
-				return (ft_destroy(*lst));
-			*end = ft_lst_new(line);
-			ft_lst_pushback(lst, *end);
+			if (!(ft_register_b_or_e(lst, end, line, fd)))
+				return (FALSE);
 		}
+		else if (*line == '#')
+			free(line);
 		else
 			ft_lst_pushback(lst, ft_lst_new(line));
 	}
@@ -84,7 +100,9 @@ t_bool	ft_parse(char *name, t_data *data)
 		return (ft_destroy(lst));
 	if (!ft_check_int(&(data->nbr_ant), lst->str))
 		return (ft_destroy(lst));
-	if (!(ft_check_rooms(data, &lst, begin, end)))
+	if (!(ft_check_rooms(data, &lst, &begin, &end)))
+		return (ft_destroy(lst));
+	if (begin || end)
 		return (ft_destroy(lst));
 	return (TRUE);
 }
