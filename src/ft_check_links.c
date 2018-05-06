@@ -6,7 +6,7 @@
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/02 18:15:15 by abezanni          #+#    #+#             */
-/*   Updated: 2018/05/06 19:35:24 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/05/06 19:41:10 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,11 @@ t_bool	ft_verif_links_names(t_room **rooms, int nbr_rooms, char *link)
 		i++;
 	if (!dash)
 		return (FALSE);
+	rooms[i]->nbr_link++;
 	j = 0;
 	while (j < nbr_rooms && ft_strcmp(rooms[j]->name, link + dash + 1))
 		j++;
+	rooms[j]->nbr_link++;
 	return (j == nbr_rooms || i == j ? FALSE : TRUE);
 }
 
