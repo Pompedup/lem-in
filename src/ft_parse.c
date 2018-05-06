@@ -6,11 +6,11 @@
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 18:34:16 by abezanni          #+#    #+#             */
-/*   Updated: 2018/05/02 18:15:12 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/05/06 19:00:14 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
 /*
 **	Verifie si le fichier est sensé
@@ -58,9 +58,9 @@ t_bool	ft_check_int(int *value, char *str)
 
 t_bool	ft_go_to_the_room(int fd, char **line, t_lst *lst)
 {
-	**line = 0;
-	while ((**line == '#' && ft_strcmp("##end", *line)
-		&& ft_strcmp("##start", *line)) || **line == '\0')
+	*(*line + 1) = 0;
+	while (**line == '#' && ft_strcmp("##end", *line)
+		&& ft_strcmp("##start", *line))
 	{
 		free(*line);
 		if (!get_next_line(fd, line))
@@ -144,6 +144,7 @@ t_bool	ft_parse(char *name, t_data *data)
 	lst = NULL;
 	data->nb_entrance = 0;
 	data->nb_wayout = 0;
+	ft_putendl("WeGo");
 	if (!(ft_get_lines(fd, &lst, data)))
 		return (FALSE);
 	ft_putendl("GetLines");

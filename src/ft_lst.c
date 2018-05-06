@@ -6,11 +6,11 @@
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 17:37:13 by abezanni          #+#    #+#             */
-/*   Updated: 2018/05/02 14:25:21 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/05/06 19:03:53 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
 /*
 **  Détruis les listes
@@ -56,7 +56,7 @@ t_lst	*ft_lst_new(char *str, int passage)
 		return (NULL);
 	lst->str = str;
 	lst->entrance = passage % 2;
-	lst->exit = passage / 2;
+	lst->wayout = passage / 2;
 	lst->next = NULL;
 	return (lst);
 }
