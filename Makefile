@@ -6,7 +6,7 @@
 #    By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/25 16:13:40 by abezanni          #+#    #+#              #
-#    Updated: 2018/05/06 19:02:59 by abezanni         ###   ########.fr        #
+#    Updated: 2018/05/09 17:21:15 by abezanni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,7 @@ CFLAGS = -Wall -Wextra -Werror $(INCLUDE)
 
 all : libftcomp $(NAME)
 
-$(NAME) : $(LIB) $(OBJ)
+$(NAME) : $(LIB) $(OBJ) inc/lem_in.h
 	echo $(OBJ)
 	gcc -o $(NAME) $(CFLAGS) $(LIB) $(OBJ)
 	@echo "\033[1;32mSucced lem-in\033[0m"

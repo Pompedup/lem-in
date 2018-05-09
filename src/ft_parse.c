@@ -6,7 +6,7 @@
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 18:34:16 by abezanni          #+#    #+#             */
-/*   Updated: 2018/05/06 19:00:14 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/05/09 19:03:30 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,13 +121,36 @@ void	ft_print_data(t_data *data)
 {
 	t_room **test;
 	int i;
+	int j;
 
 	test = data->rooms;
 	i = 0;
-	while (i < data->nbr_rooms)
+	while (i < data->nb_rooms)
 	{
-		ft_putnbrendl(test[i++]->nbr_link);
+		j = 0;
+		printf("\n\n\nindice  		%d\nnb link			%d\n", i, test[i]->nb_link);
+		while (j < test[i]->nb_link)
+			ft_putnbrendl(test[i]->links[j++]);
+		i++;
 	}
+}
+
+void	ft_print_rooms(t_data *data)
+{
+	int i = 0;
+
+	while (i < data->nb_rooms)
+	{
+		printf("%d\n%s\n\n\n\n\n", i,
+		data->rooms[i]->name);
+		i++;
+	}
+	i = 0;
+	while (i < data->nb_entrance)
+		printf("Entree%d\n\n\n", data->entrance[i++]);
+	i = 0;
+	while (i < data->nb_wayout)
+		printf("Sortie%d\n\n\n", data->wayout[i++]);
 }
 
 /*
@@ -155,11 +178,12 @@ t_bool	ft_parse(char *name, t_data *data)
 	if (!data->nb_entrance || !data->nb_wayout || !lst)
 		return (ft_destroy(lst));
 	ft_putendl("Entree Sortie Donnes");
-	if (!ft_check_int(&(data->nbr_ant), lst->str))
+	if (!ft_check_int(&(data->nb_ant), lst->str))
 		return (ft_destroy(lst));
 	ft_putendl("Les fourmiiiiies");
 	if (!(ft_check_rooms(data, &lst)))
 		return (ft_destroy(lst));
+	ft_print_rooms(data);
 	ft_putendl("Les salles sont pretes");
 	ft_print_data_lst(lst, data);
 	if (!(ft_check_links(data, lst)))

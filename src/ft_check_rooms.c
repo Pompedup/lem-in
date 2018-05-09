@@ -6,7 +6,7 @@
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/30 12:33:23 by abezanni          #+#    #+#             */
-/*   Updated: 2018/05/06 19:00:24 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/05/09 17:34:13 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ t_bool	ft_init_room(char *str, int i_r, t_room **room)
 		return (FALSE);
 	room[i_r]->name = words[0];
 	room[i_r]->num_room = i_r;
+	room[i_r]->nb_link = 0;
+	room[i_r]->links = NULL;
 	free(words[1]);
 	free(words[2]);
 	free(words);
@@ -113,7 +115,7 @@ int		*ft_table_entrance_wayout(t_lst *lst, int nb, int entrance)
 			j++;
 			lst = lst->next;
 		}
-		back[i] = j;
+		back[i] = j++;
 		lst = lst->next;
 		i++;
 	}
@@ -134,18 +136,18 @@ t_bool	ft_check_rooms(t_data *data, t_lst **lst)
 		return (FALSE);
 	if (!(data->wayout = ft_table_entrance_wayout(*lst, data->nb_wayout, 0)))
 		return (FALSE);
-	if ((data->nbr_rooms = ft_count_rooms(*lst)) < 2)
+	if ((data->nb_rooms = ft_count_rooms(*lst)) < 2)
 		return (FALSE);
-	if (!(data->rooms = malloc(sizeof(t_room*) * data->nbr_rooms)))
+	if (!(data->rooms = malloc(sizeof(t_room*) * data->nb_rooms)))
 		return (FALSE);
 	i = 0;
-	while (i < data->nbr_rooms)
+	while (i < data->nb_rooms)
 	{
 		ft_init_room((*lst)->str, i, data->rooms);
 		ft_free_item(lst);
 		i++;
 	}
-	if (!ft_verif_no_double(data->rooms, data->nbr_rooms))
+	if (!ft_verif_no_double(data->rooms, data->nb_rooms))
 		return (FALSE);
 	return (TRUE);
 }

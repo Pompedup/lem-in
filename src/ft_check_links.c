@@ -6,47 +6,92 @@
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/02 18:15:15 by abezanni          #+#    #+#             */
-/*   Updated: 2018/05/06 19:41:10 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/05/09 19:20:43 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
 /*
-**	Je sais pu pour le moment
+**	Dis si la salle est dans le liens
 */
 
-t_bool	ft_parse_link(char *str, t_room **rooms, int nbr_rooms)
+char	*ft_islinked(char *link, char *name, int len_name)
+{
+	char *answer;
+
+	if ((answer = ft_strstr(link, name)))
+	{
+		if (answer == link && answer[len_name]  == '-')
+				return (answer);
+		else if (answer[-1] == '-' && answer[len_name]  == '\0')
+				return (answer);
+	}
+	return (NULL);
+}
+
+/*
+**	Retourne la salle liee
+*/
+
+int		ft_reach_link(char *link, t_room **rooms, int nbr_rooms, int to_test)
 {
 	int i;
-	//int k;
-	int	first_len;
 
 	i = 0;
-	while (i < nbr_rooms && (ft_strstr(str, rooms[i]->name)) != str)
+	while (i < nbr_rooms)
+	{
+		if (i != to_test)
+		{
+			if (ft_islinked(link, rooms[i]->name, ft_strlen(rooms[i]->name)))
+				return (i);
+		}
 		i++;
-	first_len = ft_strlen(rooms[i]->name);
-	//while (j < nbr_rooms && )
-	return (TRUE);
+	}
+	return (-1);
+}
+
+/*
+**	Je sais pu pour le moment
+**	Bah en faite, ca tri cree les liens !!!!
+*/
+
+void	ft_parse_link(t_lst *lst, t_room **rooms, int nbr_rooms, int to_test)
+{
+	int		i_tab;
+	char	*pos;
+	int		len;
+
+	len = ft_strlen(rooms[to_test]->name);
+	i_tab = 0;
+	rooms[to_test]->links = malloc(sizeof(int) * rooms[to_test]->nb_link);
+	while (lst && i_tab < rooms[to_test]->nb_link)
+	{
+		if ((pos = ft_islinked(lst->str, rooms[to_test]->name, len)))
+		{
+			rooms[to_test]->links[i_tab] = ft_reach_link(lst->str, rooms, nbr_rooms, to_test);
+			i_tab++;
+		}
+		lst = lst->next;
+	}
 }
 
 /*
 **	Retourne le nombre de liens
 */
 
-int		ft_nb_links(char *str, t_lst *lst)
+void	ft_nb_links(t_room *room, t_lst *lst)
 {
-	int		back;
-	char	*link;
+	int		len_name;
 
-	back = 0;
+	len_name = ft_strlen(room->name);
 	while (lst)
 	{
-		if ((link = ft_strstr(lst->str, str)))
-			back++;
+		if (ft_islinked(lst->str, room->name, len_name))
+			room->nb_link++;
 		lst = lst->next;
 	}
-	return (back);
+	room->links = malloc(sizeof(int) * room->nb_link);
 }
 
 /*
@@ -65,12 +110,44 @@ t_bool	ft_verif_links_names(t_room **rooms, int nbr_rooms, char *link)
 		i++;
 	if (!dash)
 		return (FALSE);
-	rooms[i]->nbr_link++;
+	rooms[i]->nb_link++;
 	j = 0;
 	while (j < nbr_rooms && ft_strcmp(rooms[j]->name, link + dash + 1))
 		j++;
-	rooms[j]->nbr_link++;
+	rooms[j]->nb_link++;
 	return (j == nbr_rooms || i == j ? FALSE : TRUE);
+}
+
+/*
+**	Tri un tableau d'int et precise s'il n'y a pas des doubles
+*/
+
+t_bool	ft_sort_table(int *tab, int size)
+{
+	int i;
+	int swap;
+
+	i = 0;
+	while (i < size - 1)
+	{
+		if (tab[i] > tab[i + 1])
+		{
+			swap = tab[i];
+			tab[i] = tab[i + 1];
+			tab[i + 1] = swap;
+			i = 0;
+		}
+		else
+			i++;
+	}
+	i = 0;
+	while (i < size - 1)
+	{
+		if (tab[i] == tab[i + 1])
+			return (FALSE);
+		i++;
+	}
+	return (TRUE);
 }
 
 /*
@@ -81,7 +158,7 @@ t_bool	ft_corrects_links(t_data *data, t_lst *lst)
 {
 	while (lst)
 	{
-		if (!(ft_verif_links_names(data->rooms, data->nbr_rooms, lst->str)))
+		if (!(ft_verif_links_names(data->rooms, data->nb_rooms, lst->str)))
 			return (FALSE);
 		lst = lst->next;
 	}
@@ -96,18 +173,21 @@ t_bool	ft_check_links(t_data *data, t_lst *lst)
 {
 	int i;
 
-	i = 0;
 	if (!ft_corrects_links(data, lst))
 		return (FALSE);
-	/*while (i < data->nbr_rooms)
+	i = 0;
+	while (i < data->nb_rooms)
 	{
-		data->rooms[i]->nbr_link = ft_nb_links(data->rooms[i]->name, lst);
-		if (!(data->rooms[i]->links =
-			malloc(sizeof(int) * data->rooms[i]->nbr_link)))
-			return (FALSE);
+		ft_parse_link(lst, data->rooms, data->nb_rooms, i);
+		if (data->rooms[i]->nb_link > 1 && !ft_sort_table(data->rooms[i]->links, data->rooms[i]->nb_link))
+		{
+			ft_putnbrendl(i);
+			ft_putendl("biiitch");
+			//FUCK LA POLISE
+		}
 		i++;
 	}
-	while (lst)
+	/*while (lst)
 	{
 		if (!(ft_parse_link(lst->str, data->rooms, data->nbr_rooms)))
 			return (FALSE);
