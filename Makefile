@@ -6,7 +6,7 @@
 #    By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/25 16:13:40 by abezanni          #+#    #+#              #
-#    Updated: 2018/05/09 17:21:15 by abezanni         ###   ########.fr        #
+#    Updated: 2018/05/13 19:24:49 by abezanni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRC_NAME =	lem_in.c\
 			ft_parse.c\
 			ft_check_rooms.c\
 			ft_check_links.c\
+			ft_free_struct.c\
 
 #SRC_NAME1 =
 

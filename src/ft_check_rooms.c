@@ -6,7 +6,7 @@
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/30 12:33:23 by abezanni          #+#    #+#             */
-/*   Updated: 2018/05/09 17:34:13 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/05/13 19:36:06 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,20 +60,27 @@ t_bool	ft_init_room(char *str, int i_r, t_room **room)
 	char	**words;
 
 	words = ft_split_charset(str, " \t");
-	if (*words[0] == 'L')
+	if (*words[0] == 'L' || ft_strchr(words[0], '-'))
+	{
+		ft_free_tab(words, 0);
 		return (FALSE);
+	}
 	if (!(room[i_r] = malloc(sizeof(t_room))))
+	{
+		ft_free_tab(words, 0);
 		return (FALSE);
+	}
 	if (!(ft_check_int(&(room[i_r]->pos[0]), words[1]) &&
 		ft_check_int(&(room[i_r]->pos[1]), words[2])))
+	{
+		ft_free_tab(words, 0);
 		return (FALSE);
+	}
 	room[i_r]->name = words[0];
 	room[i_r]->num_room = i_r;
 	room[i_r]->nb_link = 0;
 	room[i_r]->links = NULL;
-	free(words[1]);
-	free(words[2]);
-	free(words);
+	ft_free_tab(words, 1);
 	return (TRUE);
 }
 
@@ -137,13 +144,20 @@ t_bool	ft_check_rooms(t_data *data, t_lst **lst)
 	if (!(data->wayout = ft_table_entrance_wayout(*lst, data->nb_wayout, 0)))
 		return (FALSE);
 	if ((data->nb_rooms = ft_count_rooms(*lst)) < 2)
+	{
+		data->nb_rooms = 0;
 		return (FALSE);
+	}
 	if (!(data->rooms = malloc(sizeof(t_room*) * data->nb_rooms)))
 		return (FALSE);
 	i = 0;
 	while (i < data->nb_rooms)
 	{
-		ft_init_room((*lst)->str, i, data->rooms);
+		if (!ft_init_room((*lst)->str, i, data->rooms))
+		{
+			data->nb_rooms = i;
+			return (FALSE);
+		}
 		ft_free_item(lst);
 		i++;
 	}

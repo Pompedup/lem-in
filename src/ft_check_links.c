@@ -6,7 +6,7 @@
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/02 18:15:15 by abezanni          #+#    #+#             */
-/*   Updated: 2018/05/09 19:20:43 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/05/11 16:22:19 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int		ft_reach_link(char *link, t_room **rooms, int nbr_rooms, int to_test)
 **	Bah en faite, ca tri cree les liens !!!!
 */
 
-void	ft_parse_link(t_lst *lst, t_room **rooms, int nbr_rooms, int to_test)
+t_bool	ft_parse_link(t_lst *lst, t_room **rooms, int nbr_rooms, int to_test)
 {
 	int		i_tab;
 	char	*pos;
@@ -64,7 +64,10 @@ void	ft_parse_link(t_lst *lst, t_room **rooms, int nbr_rooms, int to_test)
 
 	len = ft_strlen(rooms[to_test]->name);
 	i_tab = 0;
-	rooms[to_test]->links = malloc(sizeof(int) * rooms[to_test]->nb_link);
+	if (rooms[to_test]->nb_link == 0)
+		return (TRUE);
+	if (!(rooms[to_test]->links = malloc(sizeof(int) * rooms[to_test]->nb_link)))
+		return (FALSE);
 	while (lst && i_tab < rooms[to_test]->nb_link)
 	{
 		if ((pos = ft_islinked(lst->str, rooms[to_test]->name, len)))
@@ -74,24 +77,7 @@ void	ft_parse_link(t_lst *lst, t_room **rooms, int nbr_rooms, int to_test)
 		}
 		lst = lst->next;
 	}
-}
-
-/*
-**	Retourne le nombre de liens
-*/
-
-void	ft_nb_links(t_room *room, t_lst *lst)
-{
-	int		len_name;
-
-	len_name = ft_strlen(room->name);
-	while (lst)
-	{
-		if (ft_islinked(lst->str, room->name, len_name))
-			room->nb_link++;
-		lst = lst->next;
-	}
-	room->links = malloc(sizeof(int) * room->nb_link);
+	return (TRUE);
 }
 
 /*
@@ -116,6 +102,21 @@ t_bool	ft_verif_links_names(t_room **rooms, int nbr_rooms, char *link)
 		j++;
 	rooms[j]->nb_link++;
 	return (j == nbr_rooms || i == j ? FALSE : TRUE);
+}
+
+/*
+**	Verifier si la liste est correcte
+*/
+
+t_bool	ft_corrects_links(t_data *data, t_lst *lst)
+{
+	while (lst)
+	{
+		if (!(ft_verif_links_names(data->rooms, data->nb_rooms, lst->str)))
+			return (FALSE);
+		lst = lst->next;
+	}
+	return (TRUE);
 }
 
 /*
@@ -151,21 +152,6 @@ t_bool	ft_sort_table(int *tab, int size)
 }
 
 /*
-**	Verifier si la liste est correcte
-*/
-
-t_bool	ft_corrects_links(t_data *data, t_lst *lst)
-{
-	while (lst)
-	{
-		if (!(ft_verif_links_names(data->rooms, data->nb_rooms, lst->str)))
-			return (FALSE);
-		lst = lst->next;
-	}
-	return (TRUE);
-}
-
-/*
 **	Cherche les liens entre les salles
 */
 
@@ -178,20 +164,11 @@ t_bool	ft_check_links(t_data *data, t_lst *lst)
 	i = 0;
 	while (i < data->nb_rooms)
 	{
-		ft_parse_link(lst, data->rooms, data->nb_rooms, i);
+		if (!ft_parse_link(lst, data->rooms, data->nb_rooms, i))
+			return (FALSE);
 		if (data->rooms[i]->nb_link > 1 && !ft_sort_table(data->rooms[i]->links, data->rooms[i]->nb_link))
-		{
-			ft_putnbrendl(i);
-			ft_putendl("biiitch");
-			//FUCK LA POLISE
-		}
+			return (FALSE);
 		i++;
 	}
-	/*while (lst)
-	{
-		if (!(ft_parse_link(lst->str, data->rooms, data->nbr_rooms)))
-			return (FALSE);
-		ft_free_item(&lst);
-	}*/
 	return (TRUE);
 }

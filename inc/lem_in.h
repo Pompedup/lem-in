@@ -6,7 +6,7 @@
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 16:06:51 by abezanni          #+#    #+#             */
-/*   Updated: 2018/05/09 17:31:29 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/05/13 19:24:35 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,13 @@ t_bool			ft_check_links(t_data *data, t_lst *lst);
 */
 
 t_bool			ft_check_rooms(t_data *data, t_lst **lst);
+
+/*
+**	ft_free_struct.c
+*/
+
+void			ft_free_tab(char **tab, int i);
+void			ft_free_t_data(t_data *data);
 
 /*
 **	ft_lst.c

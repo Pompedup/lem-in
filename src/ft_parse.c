@@ -6,7 +6,7 @@
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 18:34:16 by abezanni          #+#    #+#             */
-/*   Updated: 2018/05/09 19:03:30 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/05/10 12:53:37 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,8 +165,12 @@ t_bool	ft_parse(char *name, t_data *data)
 
 	fd = open(name, O_RDONLY);
 	lst = NULL;
+	data->nb_rooms = 0;
 	data->nb_entrance = 0;
 	data->nb_wayout = 0;
+	data->entrance = NULL;
+	data->wayout = NULL;
+	data->rooms = NULL;
 	ft_putendl("WeGo");
 	if (!(ft_get_lines(fd, &lst, data)))
 		return (FALSE);
