@@ -6,7 +6,7 @@
 #    By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/25 16:13:40 by abezanni          #+#    #+#              #
-#    Updated: 2018/05/13 19:24:49 by abezanni         ###   ########.fr        #
+#    Updated: 2018/05/13 19:39:23 by abezanni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ OBJ = $(SRC:.c=.o)
 #OBJ2 = $(SRC_2:.c=.o)
 
 
-CC = gcc
+CC = @gcc
 
 SRC = $(addprefix src/,$(SRC_NAME))
 
@@ -54,8 +54,7 @@ CFLAGS = -Wall -Wextra -Werror $(INCLUDE)
 all : libftcomp $(NAME)
 
 $(NAME) : $(LIB) $(OBJ) inc/lem_in.h
-	echo $(OBJ)
-	gcc -o $(NAME) $(CFLAGS) $(LIB) $(OBJ)
+	$(CC) -o $(NAME) $(CFLAGS) $(LIB) $(OBJ)
 	@echo "\033[1;32mSucced lem-in\033[0m"
 
 
