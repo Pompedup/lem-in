@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lst.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adibou <adibou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 17:37:13 by abezanni          #+#    #+#             */
-/*   Updated: 2018/04/30 12:42:11 by adibou           ###   ########.fr       */
+/*   Updated: 2018/05/06 19:03:53 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
 /*
 **  Détruis les listes
@@ -48,13 +48,15 @@ void	ft_free_item(t_lst **lst)
 **  Créé un nouvel élément de type lst
 */
 
-t_lst	*ft_lst_new(char *str)
+t_lst	*ft_lst_new(char *str, int passage)
 {
 	t_lst *lst;
 
 	if (!(lst = malloc(sizeof(t_lst))))
 		return (NULL);
 	lst->str = str;
+	lst->entrance = passage % 2;
+	lst->wayout = passage / 2;
 	lst->next = NULL;
 	return (lst);
 }

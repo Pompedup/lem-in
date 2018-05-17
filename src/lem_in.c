@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem-in.c                                           :+:      :+:    :+:   */
+/*   lem_in.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adibou <adibou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 15:13:14 by abezanni          #+#    #+#             */
-/*   Updated: 2018/04/30 14:46:45 by adibou           ###   ########.fr       */
+/*   Updated: 2018/05/17 11:31:50 by adibou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
 void	ft_print_struct(t_data *data)
 {
@@ -40,7 +40,7 @@ void	ft_print_struct(t_data *data)
 
 int		ft_invalide_file(void)
 {
-	ft_putendl("ERROR");
+	ft_putendl_fd("ERROR", 2);
 	return (0);
 }
 

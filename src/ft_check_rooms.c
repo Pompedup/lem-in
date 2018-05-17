@@ -5,34 +5,82 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: adibou <adibou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/30 12:33:23 by adibou            #+#    #+#             */
-/*   Updated: 2018/04/30 15:24:32 by adibou           ###   ########.fr       */
+/*   Created: 2018/04/30 12:33:23 by abezanni          #+#    #+#             */
+/*   Updated: 2018/05/17 11:31:27 by adibou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
+
+/*
+**	Teste les noms et les positions
+*/
+
+t_bool	ft_check_name_and_pos(t_room *room, t_room **rooms, int nbr_rooms)
+{
+	int i;
+
+	i = 0;
+	while (i < nbr_rooms)
+	{
+		if (!ft_strcmp(room->name, rooms[i]->name))
+			return (FALSE);
+		if (room->pos[0] == rooms[i]->pos[0]
+			&& room->pos[1] == rooms[i]->pos[1])
+			return (FALSE);
+		i++;
+	}
+	return (TRUE);
+}
+
+/*
+**	Verifie qu'il n'y a aucune salle avec le meme nom ou les memes positions
+*/
+
+t_bool	ft_verif_no_double(t_room **rooms, int nbr_rooms)
+{
+	int i;
+
+	i = 0;
+	while (i < nbr_rooms - 1)
+	{
+		if (!ft_check_name_and_pos(rooms[i], rooms + i + 1, nbr_rooms - i - 1))
+			return (FALSE);
+		i++;
+	}
+	return (TRUE);
+}
 
 /*
 **  Remplis une salle avec les données disponibles
 */
 
-t_bool	ft_init_room(char *str, int i_r, t_room **room, t_lst **to_null)
+t_bool	ft_init_room(char *str, int i_r, t_room **room)
 {
-	char	**data_room;
+	char	**words;
 
-	if (to_null)
-		*to_null = NULL;
-	if (!(*room = malloc(sizeof(t_room))))
+	words = ft_split_charset(str, " \t");
+	if (*words[0] == 'L' || ft_strchr(words[0], '-'))
+	{
+		ft_free_tab(words, 0);
 		return (FALSE);
-    data_room = ft_split_charset(str, " \t");
-	if (*(data_room[0]) == 'L')
+	}
+	if (!(room[i_r] = malloc(sizeof(t_room))))
+	{
+		ft_free_tab(words, 0);
 		return (FALSE);
-	if (!(ft_check_int(&((*room)->pos[0]), data_room[1]) &&
-        ft_check_int(&((*room)->pos[1]), data_room[2])))
+	}
+	if (!(ft_check_int(&(room[i_r]->pos[0]), words[1]) &&
+		ft_check_int(&(room[i_r]->pos[1]), words[2])))
+	{
+		ft_free_tab(words, 0);
 		return (FALSE);
-	(*room)->name = ft_strdup(data_room[0]);
-	(*room)->num_room = i_r;
-    ft_free_char_tab(data_room);
+	}
+	room[i_r]->name = words[0];
+	room[i_r]->num_room = i_r;
+	room[i_r]->nb_link = 0;
+	room[i_r]->links = NULL;
+	ft_free_tab(words, 1);
 	return (TRUE);
 }
 
@@ -54,35 +102,67 @@ int		ft_count_rooms(t_lst *lst)
 }
 
 /*
+**	Cree les tableaux d'entree ou de sortie
+*/
+
+int		*ft_table_entrance_wayout(t_lst *lst, int nb, int entrance)
+{
+	int *back;
+	int i;
+	int j;
+
+	if (!(back = malloc(sizeof(int) * nb)))
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (i < nb)
+	{
+		while ((entrance ? lst->entrance : lst->wayout) == 0)
+		{
+			j++;
+			lst = lst->next;
+		}
+		back[i] = j++;
+		lst = lst->next;
+		i++;
+	}
+	return (back);
+}
+
+/*
 **  Créé la liste des salles
 */
 
-t_bool	ft_check_rooms(t_data *data, t_lst **lst, t_lst **begin, t_lst **end)
+t_bool	ft_check_rooms(t_data *data, t_lst **lst)
 {
-	int		nbr_rooms;
 	int		i;
 	int		to_send;
 
 	ft_free_item(lst);
-	if ((nbr_rooms = ft_count_rooms(*lst)) < 2)
+	if (!(data->entrance =
+		ft_table_entrance_wayout(*lst, data->nb_entrance, 1)))
 		return (FALSE);
-	if (!(data->rooms = malloc(sizeof(t_room*) * (nbr_rooms + 1))))
+	if (!(data->wayout = ft_table_entrance_wayout(*lst, data->nb_wayout, 0)))
+		return (FALSE);
+	if ((data->nb_rooms = ft_count_rooms(*lst)) < 2)
+	{
+		data->nb_rooms = 0;
+		return (FALSE);
+	}
+	if (!(data->rooms = malloc(sizeof(t_room*) * data->nb_rooms)))
 		return (FALSE);
 	i = 0;
-	data->last = nbr_rooms - 1;
-	while (i < nbr_rooms)
+	while (i < data->nb_rooms)
 	{
-		to_send = *begin ? i + 1 : i;
-		to_send = *end ? to_send : to_send - 1;
-		if (*lst == *begin)
-			ft_init_room((*lst)->str, 0, &(data->rooms[0]), begin);
-		else if (*lst == *end)
-			ft_init_room((*lst)->str, data->last, &(data->rooms[data->last]), end);
-		else
-			ft_init_room((*lst)->str, to_send, &(data->rooms[to_send]), NULL);
+		if (!ft_init_room((*lst)->str, i, data->rooms))
+		{
+			data->nb_rooms = i;
+			return (FALSE);
+		}
 		ft_free_item(lst);
 		i++;
 	}
-	data->rooms[i] = NULL;
+	if (!ft_verif_no_double(data->rooms, data->nb_rooms))
+		return (FALSE);
 	return (TRUE);
 }
