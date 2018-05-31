@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   resolve.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/23 16:17:36 by ccoupez           #+#    #+#             */
-/*   Updated: 2018/05/31 16:14:00 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/05/31 17:05:42 by ccoupez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,14 @@ void	deep_course(t_data *graph, t_path **path, t_room *room, int *visited)
 	int i;
 
 	mark(visited, room->num_room);
-	if (room == graph->rooms[graph->wayout[0]])
-		ft_lst_path_pushback(path, ft_lst_path_new(visited, graph->nb_rooms));
+	i = 0;
+	while (i < graph->nb_wayout)
+		if (room == graph->rooms[graph->wayout[i++]])
+		{
+			ft_lst_path_pushback(path, ft_lst_path_new(visited, graph->nb_rooms));
+			unmark(visited,room->num_room);
+			return ;
+		}
 	i = 0;
 	while (i < room->nb_link)
 	{
@@ -61,6 +67,29 @@ void	deep_course(t_data *graph, t_path **path, t_room *room, int *visited)
 		i++;
 	}
 	unmark(visited,room->num_room);
+}
+
+void	sort_ways(t_path *ways)
+{
+	t_path	*actual;
+	t_path	*tmp;
+
+	actual = ways;
+	while (actual)
+	{
+		tmp = actual->next;
+		while (tmp)
+		{
+			if (actual->len > tmp->len)
+			{
+				change_place(actual, tmp);
+				tmp = actual->next;
+			}
+			else
+				tmp = tmp->next;
+		}
+		actual = actual->next;
+	}
 }
 
 int     resolve(t_data *data)
@@ -73,13 +102,19 @@ int     resolve(t_data *data)
 	while (i < data->nb_rooms)
 		tab[i++] = -1;
 	ways = NULL;
-	deep_course(data, &ways, data->rooms[data->entrance[0]], tab);
-
+	i = 0;
+	while (i < data->nb_entrance)
+		deep_course(data, &ways, data->rooms[data->entrance[i++]], tab);
+	sort_ways(ways);
 	while (ways)
 	{
 		i = 0;
 		while (i < ways->len)
-			printf("%d - ", ways->way[i++]);
+		{
+			printf("%d %s ", ways->way[i], i < ways->len - 1 ? "-" : "");
+			i++;
+		}
+		printf("\nways->len %d\n", ways->len);
 		printf("\n");
 		ways = ways->next;
 	}

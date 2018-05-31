@@ -6,7 +6,7 @@
 /*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 18:34:16 by abezanni          #+#    #+#             */
-/*   Updated: 2018/05/29 19:17:53 by ccoupez          ###   ########.fr       */
+/*   Updated: 2018/05/31 16:58:20 by ccoupez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,7 @@ t_bool	ft_parse(char *name, t_data *data)
 	if (!ft_verify_files(lst))
 		return (ft_destroy(lst));
 //	ft_print_data_lst(lst, data);
-//	ft_putendl("Donnees correctes");
+	//ft_putendl("Donnees correctes");
 	if (!data->nb_entrance || !data->nb_wayout || !lst)
 		return (ft_destroy(lst));
 	//ft_putendl("Entree Sortie Donnes");
@@ -201,12 +201,12 @@ t_bool	ft_parse(char *name, t_data *data)
 	//ft_putendl("Les fourmiiiiies");
 	if (!(ft_check_rooms(data, &lst)))
 		return (ft_destroy(lst));
-	ft_print_rooms(data);
-	ft_putendl("Les salles sont pretes");
+	//ft_print_rooms(data);
+	//ft_putendl("Les salles sont pretes");
 	//ft_print_data_lst(lst, data);
 	if (!(ft_check_links(data, lst)))
 		return (ft_destroy(lst));
 	//ft_print_data(data);
-//	ft_putendl("2Les salles sont pretes");
+	//ft_putendl("2Les salles sont pretes");
 	return (TRUE);
 }
