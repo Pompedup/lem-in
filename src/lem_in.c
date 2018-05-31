@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adibou <adibou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 15:13:14 by abezanni          #+#    #+#             */
-/*   Updated: 2018/05/17 11:31:50 by adibou           ###   ########.fr       */
+/*   Updated: 2018/05/29 19:17:52 by ccoupez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ void	ft_print_struct(t_data *data)
 	{
 		if (data->rooms)
 		{
-			while ((data->rooms[i]) != NULL)
+			while (i < data->nb_rooms)
 			{
 				room = data->rooms[i];
 				ft_putendl(room->name);
 				ft_putnbrendl(room->num_room);
-				ft_putnbrendl(room->pos[0]);
-				ft_putnbrendl(room->pos[1]);
+			//	ft_putnbrendl(room->pos[0]);
+			//	ft_putnbrendl(room->pos[1]);
 				i++;
 			}
 		}
@@ -59,6 +59,7 @@ int		main(int ac, char **av)
 	}
 	if (!ft_parse(av[1], &data))
 		return (ft_invalide_file());
-	ft_print_struct(&data);
+	resolve(&data);
+	//ft_print_struct(&data);
 	return (0);
 }
