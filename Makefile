@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+         #
+#    By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/25 16:13:40 by abezanni          #+#    #+#              #
-#    Updated: 2018/05/31 15:22:37 by abezanni         ###   ########.fr        #
+#    Updated: 2018/05/31 16:17:46 by ccoupez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,9 +45,9 @@ NAME = lem-in
 
 #NAME2 = push_swap
 
-LIB_PATH = ../libft
+LIB_PATH = libft
 
-LIB = ../libft/libft.a
+LIB = libft/libft.a
 
 INCLUDE = -I ./inc
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 16:06:51 by abezanni          #+#    #+#             */
-/*   Updated: 2018/05/31 15:46:16 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/05/31 16:43:44 by ccoupez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # define FALSE 0
 
 # include <fcntl.h>
-# include "../../libft/libft.h"
+# include "../libft/libft.h"
 # include <stdio.h>
 
 typedef char	t_bool;
@@ -114,4 +114,6 @@ int				*ft_intset(int *tab, int c, size_t n);
 
 t_path	*ft_lst_path_new(int *way, int max);
 void	ft_lst_path_pushback(t_path **begin, t_path *to_add);
+void	change_place(t_path *a, t_path *b);
+
 #endif
