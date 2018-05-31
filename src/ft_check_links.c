@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_links.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/02 18:15:15 by abezanni          #+#    #+#             */
-/*   Updated: 2018/05/11 16:22:19 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/05/28 16:07:43 by ccoupez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ t_bool	ft_sort_table(int *tab, int size)
 t_bool	ft_check_links(t_data *data, t_lst *lst)
 {
 	int i;
-
+	//printf("aa\n");
 	if (!ft_corrects_links(data, lst))
 		return (FALSE);
 	i = 0;

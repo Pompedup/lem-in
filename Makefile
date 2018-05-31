@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: adibou <adibou@student.42.fr>              +#+  +:+       +#+         #
+#    By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/25 16:13:40 by abezanni          #+#    #+#              #
-#    Updated: 2018/05/17 11:32:55 by adibou           ###   ########.fr        #
+#    Updated: 2018/05/29 12:03:13 by ccoupez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,8 @@ SRC_NAME =	lem_in.c\
 			ft_check_rooms.c\
 			ft_check_links.c\
 			ft_free_struct.c\
+			resolve.c \
+			lst_path.c
 
 #SRC_NAME1 =
 
@@ -43,9 +45,9 @@ NAME = lem-in
 
 #NAME2 = push_swap
 
-LIB_PATH = ../libft
+LIB_PATH = libft
 
-LIB = ../libft/libft.a
+LIB = libft/libft.a
 
 INCLUDE = -I ./inc
 
