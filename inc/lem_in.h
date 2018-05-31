@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 16:06:51 by abezanni          #+#    #+#             */
-/*   Updated: 2018/05/31 14:36:31 by ccoupez          ###   ########.fr       */
+/*   Updated: 2018/05/31 15:46:16 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # define FALSE 0
 
 # include <fcntl.h>
-# include "../libft/libft.h"
+# include "../../libft/libft.h"
 # include <stdio.h>
 
 typedef char	t_bool;
@@ -58,15 +58,8 @@ typedef struct		s_path
 	int				*way;
 	int				len;
 	struct s_path	*next;
-	struct s_path	*prev;
 
 }					t_path;
-
-typedef struct		s_path_info
-{
-	t_path			**tab_path;
-	int				nb_path;
-}					t_path_info; 
 
 /*
 **  lem-in.c
@@ -114,6 +107,11 @@ t_bool			ft_parse(char *name, t_data *data);
 
 int     		resolve(t_data *data);
 int				*ft_intset(int *tab, int c, size_t n);
-t_path			*new_lst_path(int nb_rooms);
-void			lst_path_pback(t_path_info *dlist, t_path *new);
+
+/*
+**	ft_lst_path.c
+*/
+
+t_path	*ft_lst_path_new(int *way, int max);
+void	ft_lst_path_pushback(t_path **begin, t_path *to_add);
 #endif
