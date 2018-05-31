@@ -6,7 +6,7 @@
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 18:44:33 by abezanni          #+#    #+#             */
-/*   Updated: 2018/05/13 19:23:08 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/05/31 14:38:57 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,20 @@ void	ft_free_rooms(t_room **rooms, int nb_rooms)
 	i = 0;
 	while (i < nb_rooms)
 	{
-		if (rooms[i]->links)
-			free(rooms[i]->links);
-		free(rooms[i]->name);
-		free(rooms[i]);
+		if (rooms[i])
+		{
+			if (rooms[i]->links)
+				free(rooms[i]->links);
+			if (rooms[i]->name)
+				free(rooms[i]->name);
+			free(rooms[i]);
+		}
 		i++;
 	}
 	free(rooms);
 }
 
-void	ft_free_t_data(t_data *data)
+t_bool	ft_free_t_data(t_data *data)
 {
 	if (data->rooms)
 		ft_free_rooms(data->rooms, data->nb_rooms);
@@ -43,4 +47,5 @@ void	ft_free_t_data(t_data *data)
 		free(data->entrance);
 	if (data->wayout)
 		free(data->wayout);
+	return (FALSE);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_rooms.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adibou <adibou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/30 12:33:23 by abezanni          #+#    #+#             */
-/*   Updated: 2018/05/17 11:31:27 by adibou           ###   ########.fr       */
+/*   Updated: 2018/05/31 14:34:23 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,33 +136,32 @@ int		*ft_table_entrance_wayout(t_lst *lst, int nb, int entrance)
 t_bool	ft_check_rooms(t_data *data, t_lst **lst)
 {
 	int		i;
-	int		to_send;
 
 	ft_free_item(lst);
 	if (!(data->entrance =
 		ft_table_entrance_wayout(*lst, data->nb_entrance, 1)))
 		return (FALSE);
 	if (!(data->wayout = ft_table_entrance_wayout(*lst, data->nb_wayout, 0)))
-		return (FALSE);
+		return (ft_free_t_data(data));
 	if ((data->nb_rooms = ft_count_rooms(*lst)) < 2)
 	{
 		data->nb_rooms = 0;
-		return (FALSE);
+		return (ft_free_t_data(data));
 	}
 	if (!(data->rooms = malloc(sizeof(t_room*) * data->nb_rooms)))
-		return (FALSE);
+		return (ft_free_t_data(data));
 	i = 0;
 	while (i < data->nb_rooms)
 	{
 		if (!ft_init_room((*lst)->str, i, data->rooms))
 		{
 			data->nb_rooms = i;
-			return (FALSE);
+			return (ft_free_t_data(data));
 		}
 		ft_free_item(lst);
 		i++;
 	}
 	if (!ft_verif_no_double(data->rooms, data->nb_rooms))
-		return (FALSE);
+		return (ft_free_t_data(data));
 	return (TRUE);
 }

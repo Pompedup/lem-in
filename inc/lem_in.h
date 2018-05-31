@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adibou <adibou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 16:06:51 by abezanni          #+#    #+#             */
-/*   Updated: 2018/05/17 11:33:46 by adibou           ###   ########.fr       */
+/*   Updated: 2018/05/31 14:30:11 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ t_bool			ft_check_rooms(t_data *data, t_lst **lst);
 */
 
 void			ft_free_tab(char **tab, int i);
-void			ft_free_t_data(t_data *data);
+t_bool			ft_free_t_data(t_data *data);
 
 /*
 **	ft_lst.c
@@ -92,5 +92,14 @@ void			ft_lst_pushback(t_lst **begin, t_lst *to_add);
 
 t_bool			ft_check_int(int *value, char *str);
 t_bool			ft_parse(char *name, t_data *data);
+
+
+
+
+// test_file.c
+void	ft_print_struct(t_data *data);
+void	ft_print_data_lst(t_lst *lst, t_data *data);
+void	ft_print_data(t_data *data);
+void	ft_print_rooms(t_data *data);
 
 #endif

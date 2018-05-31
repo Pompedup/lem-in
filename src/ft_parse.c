@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adibou <adibou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 18:34:16 by abezanni          #+#    #+#             */
-/*   Updated: 2018/05/17 11:31:45 by adibou           ###   ########.fr       */
+/*   Updated: 2018/05/31 14:24:59 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,56 +103,6 @@ t_bool	ft_get_lines(int fd, t_lst **lst, t_data *data)
 	return (TRUE);
 }
 
-void	ft_print_data_lst(t_lst *lst, t_data *data)
-{
-	ft_putendl("");
-	ft_putnbrendl(data->nb_entrance);
-	ft_putnbrendl(data->nb_wayout);
-	ft_putendl("");
-	while (lst)
-	{
-		ft_putendl(lst->str);
-		lst = lst->next;
-	}
-	ft_putendl("");
-}
-
-void	ft_print_data(t_data *data)
-{
-	t_room **test;
-	int i;
-	int j;
-
-	test = data->rooms;
-	i = 0;
-	while (i < data->nb_rooms)
-	{
-		j = 0;
-		printf("\n\n\nindice  		%d\nnb link			%d\n", i, test[i]->nb_link);
-		while (j < test[i]->nb_link)
-			ft_putnbrendl(test[i]->links[j++]);
-		i++;
-	}
-}
-
-void	ft_print_rooms(t_data *data)
-{
-	int i = 0;
-
-	while (i < data->nb_rooms)
-	{
-		printf("%d\n%s\n\n\n\n\n", i,
-		data->rooms[i]->name);
-		i++;
-	}
-	i = 0;
-	while (i < data->nb_entrance)
-		printf("Entree%d\n\n\n", data->entrance[i++]);
-	i = 0;
-	while (i < data->nb_wayout)
-		printf("Sortie%d\n\n\n", data->wayout[i++]);
-}
-
 /*
 **  Lis le fichier envoyé en paramètre, le test et retourne les
 **  données s'il est valide
@@ -171,28 +121,28 @@ t_bool	ft_parse(char *name, t_data *data)
 	data->entrance = NULL;
 	data->wayout = NULL;
 	data->rooms = NULL;
-	ft_putendl("WeGo");
+	//ft_putendl("WeGo");
 	if (!(ft_get_lines(fd, &lst, data)))
-		return (FALSE);
-	ft_putendl("GetLines");
+		return (ft_destroy(lst));
+	//ft_putendl("GetLines");
 	if (!ft_verify_files(lst))
 		return (ft_destroy(lst));
-	ft_print_data_lst(lst, data);
-	ft_putendl("Donnees correctes");
+	//ft_print_data_lst(lst, data);
+	//ft_putendl("Donnees correctes");
 	if (!data->nb_entrance || !data->nb_wayout || !lst)
 		return (ft_destroy(lst));
-	ft_putendl("Entree Sortie Donnes");
+	//ft_putendl("Entree Sortie Donnes");
 	if (!ft_check_int(&(data->nb_ant), lst->str))
 		return (ft_destroy(lst));
-	ft_putendl("Les fourmiiiiies");
+	//ft_putendl("Les fourmiiiiies");
 	if (!(ft_check_rooms(data, &lst)))
 		return (ft_destroy(lst));
-	ft_print_rooms(data);
-	ft_putendl("Les salles sont pretes");
-	ft_print_data_lst(lst, data);
+	//ft_print_rooms(data);
+	//ft_putendl("Les salles sont pretes");
+	//ft_print_data_lst(lst, data);
 	if (!(ft_check_links(data, lst)))
 		return (ft_destroy(lst));
-	ft_print_data(data);
-	ft_putendl("Les salles sont pretes");
+	//ft_print_data(data);
+	//ft_putendl("Les salles sont pretes");
 	return (TRUE);
 }

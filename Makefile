@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: adibou <adibou@student.42.fr>              +#+  +:+       +#+         #
+#    By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/25 16:13:40 by abezanni          #+#    #+#              #
-#    Updated: 2018/05/17 11:32:55 by adibou           ###   ########.fr        #
+#    Updated: 2018/05/31 14:19:55 by abezanni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRC_NAME =	lem_in.c\
 			ft_check_rooms.c\
 			ft_check_links.c\
 			ft_free_struct.c\
+			test_file.c
 
 #SRC_NAME1 =
 
@@ -51,12 +52,28 @@ INCLUDE = -I ./inc
 
 CFLAGS = -Wall -Wextra -Werror $(INCLUDE)
 
+FSANITIZE = -fsanitize=address
+
 all : libftcomp $(NAME)
 
 $(NAME) : $(LIB) $(OBJ) inc/lem_in.h
 	$(CC) -o $(NAME) $(CFLAGS) $(LIB) $(OBJ)
 	@echo "\033[1;32mSucced lem-in\033[0m"
 
+debug : $(LIB) inc/lem_in.h
+	$(CC) $(FSANITIZE) -c $(SRC) $(CFLAGS)
+	$(CC) $(FSANITIZE) -o $(NAME) $(LIB) $(SRC_NAME:.c=.o)
+	@echo "\033[1;32mDebug\033[0m"
+
+flags : $(LIB) inc/lem_in.h
+	$(CC) -g -c $(SRC) $(CFLAGS)
+	$(CC) -o $(NAME) $(CFLAGS) $(LIB) $(SRC_NAME:.c=.o)
+	@echo "\033[1;32mFlags\033[0m"
+
+noflags : $(LIB) inc/lem_in.h
+	$(CC) -c $(SRC) $(INCLUDE)
+	$(CC) -o $(NAME) $(LIB) $(OBJ) $(INCLUDE)
+	@echo "\033[1;32mNoflags\033[0m"
 
 #$(NAME1) : $(LIB) $(OBJ1) $(OBJ_ALL)
 #	@gcc -o $(NAME1) $(CFLAGS) $(LIB) $(OBJ1) $(OBJ_ALL)

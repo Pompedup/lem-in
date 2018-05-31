@@ -6,7 +6,7 @@
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/02 18:15:15 by abezanni          #+#    #+#             */
-/*   Updated: 2018/05/11 16:22:19 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/05/31 14:36:03 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,14 +160,14 @@ t_bool	ft_check_links(t_data *data, t_lst *lst)
 	int i;
 
 	if (!ft_corrects_links(data, lst))
-		return (FALSE);
+		return (ft_free_t_data(data));
 	i = 0;
 	while (i < data->nb_rooms)
 	{
 		if (!ft_parse_link(lst, data->rooms, data->nb_rooms, i))
-			return (FALSE);
+			return (ft_free_t_data(data));
 		if (data->rooms[i]->nb_link > 1 && !ft_sort_table(data->rooms[i]->links, data->rooms[i]->nb_link))
-			return (FALSE);
+			return (ft_free_t_data(data));
 		i++;
 	}
 	return (TRUE);
