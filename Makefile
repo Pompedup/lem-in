@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+         #
+#    By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/25 16:13:40 by abezanni          #+#    #+#              #
-#    Updated: 2018/05/29 12:03:13 by ccoupez          ###   ########.fr        #
+#    Updated: 2018/05/31 15:22:37 by abezanni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,9 +45,9 @@ NAME = lem-in
 
 #NAME2 = push_swap
 
-LIB_PATH = libft
+LIB_PATH = ../libft
 
-LIB = libft/libft.a
+LIB = ../libft/libft.a
 
 INCLUDE = -I ./inc
 
@@ -58,16 +58,6 @@ all : libftcomp $(NAME)
 $(NAME) : $(LIB) $(OBJ) inc/lem_in.h
 	$(CC) -o $(NAME) $(CFLAGS) $(LIB) $(OBJ)
 	@echo "\033[1;32mSucced lem-in\033[0m"
-
-
-#$(NAME1) : $(LIB) $(OBJ1) $(OBJ_ALL)
-#	@gcc -o $(NAME1) $(CFLAGS) $(LIB) $(OBJ1) $(OBJ_ALL)
-#	@echo "\033[1;32mSucced checker\033[0m"
-#
-#
-#$(NAME2) : $(LIB) $(OBJ2) $(OBJ_ALL)
-#	@gcc -o $(NAME2) $(CFLAGS) $(LIB) $(OBJ2) $(OBJ_ALL)
-#	@echo "\033[1;32mSucced push_swap\033[0m"
 
 libftcomp :
 	@make -C $(LIB_PATH)

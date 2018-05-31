@@ -3,54 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   lst_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 15:30:28 by ccoupez           #+#    #+#             */
-/*   Updated: 2018/05/31 12:14:48 by ccoupez          ###   ########.fr       */
+/*   Updated: 2018/05/31 15:44:34 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int	*ft_intset(int *tab, int c, size_t n)
-{
-	size_t i;
+/*
+**  Créé un nouvel élément de type path
+*/
 
-	i = -1;
-	while (++i < n)
-	{
-		//printf("i %zu\n", i);
-		tab[i] = c;
-	}
-		
-	return (tab);
+t_path	*ft_lst_path_new(int *way, int max)
+{
+	t_path	*path;
+	int		len;
+
+	len = 0;
+	while (way[len] != -1 && len < max)
+		len++;
+	if (!(path = malloc(sizeof(t_path))))
+		return (NULL);
+	path->len = len;
+	if (!(path->way = malloc(sizeof(int) * len)))
+		return (NULL);
+	len = -1;
+	while (++len < path->len)
+		path->way[len] = way[len];
+	path->next = NULL;
+	return (path);
 }
 
-t_path	*new_lst_path(int nb_rooms)
-{
-	t_path	*link;
+/*
+**  Envoie un élément a la fin de ma liste de path
+*/
 
-	if (!(link = (t_path *)malloc(sizeof(t_path))))
-		return (NULL);
-	if (!(link->way = (int *)malloc(sizeof(int) * nb_rooms + 1)))
-		return (NULL);
-	ft_intset(link->way, -1, nb_rooms + 1);
-	link->len = 0;
-	link->next = NULL;
-	link->prev = NULL;
-	return (link);
-}
-
-/*void	lst_path_pback(t_path_info *dlist, t_path *new)
+void	ft_lst_path_pushback(t_path **begin, t_path *to_add)
 {
-	if (dlist->begin == NULL)
-		dlist->begin = new;
+	t_path *tmp;
+
+	if (!*begin)
+		*begin = to_add;
 	else
-		dlist->end->next = new;
-	dlist->end = new;
-}*/
-
-/*void	free_lst_path(t_path *lst)
-{
-	//a voir avec adrien!!
-}*/
+	{
+		tmp = *begin;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = to_add;
+	}
+}
