@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 18:34:16 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/01 15:56:26 by ccoupez          ###   ########.fr       */
+/*   Updated: 2018/06/01 19:27:21 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,54 +115,6 @@ void	ft_print_data_lst(t_lst *lst, t_data *data)
 		lst = lst->next;
 	}
 	ft_putendl("");
-}
-
-void	ft_print_data(t_data *data)
-{
-	t_room	**test;
-	int		i;
-	int		j;
-
-	test = data->rooms;
-	i = 0;
-	while (i < data->nb_rooms)
-	{
-		j = 0;
-		printf("\nnom de la room %s\n", test[i]->name);
-		printf("\ntest[i]->num_room %d\n", test[i]->num_room);
-		printf("\nroom dindice  	%d\nqui a  %d link\n", i, test[i]->nb_link);
-		while (j < test[i]->nb_link)
-		{
-			printf("\nlie a la room dindice : %d\n", test[i]->links[j++]);
-			//ft_putnbrendl(test[i]->links[j++]);
-		}
-		i++;
-	}
-	printf("\n\n\n");
-}
-
-void	ft_print_rooms(t_data *data)
-{
-	int i;
-
-	i = 0;
-	//while (i < data->nb_rooms)
-	//{
-	//	printf("name room   %s\n", data->rooms[i]->name);
-	//	i++;
-	//}
-	//i = 0;
-	while (i < data->nb_entrance)
-	{
-		printf("\nEntree :%d\n", data->entrance[i++]);
-		//ft_putendl(data->rooms[data->entrance[i++]]->name);
-	}
-	i = 0;
-	while (i < data->nb_wayout)
-	{
-		printf("Sortie :%d\n", data->wayout[i++]);
-	//	ft_putendl(data->rooms[data->wayout[i++]]->name);
-	}
 }
 
 /*

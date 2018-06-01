@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_rooms.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/30 12:33:23 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/01 15:50:43 by ccoupez          ###   ########.fr       */
+/*   Updated: 2018/06/01 19:07:18 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,15 +129,8 @@ int		*ft_tab_start_end(t_lst *lst, int nb, int entrance)
 	return (back);
 }
 
-/*
-**  Créé la liste des salles
-*/
-
-t_bool	ft_check_rooms(t_data *data, t_lst **lst)
+t_bool	ft_init_rooms(t_data *data, t_lst **lst)
 {
-	int		i;
-
-	ft_free_item(lst);
 	if (!(data->entrance = ft_tab_start_end(*lst, data->nb_entrance, 1)))
 		return (FALSE);
 	if (!(data->wayout = ft_tab_start_end(*lst, data->nb_wayout, 0)))
@@ -147,6 +140,20 @@ t_bool	ft_check_rooms(t_data *data, t_lst **lst)
 		data->nb_rooms = 0;
 		return (FALSE);
 	}
+	return (TRUE);
+}
+
+/*
+**  Créé la liste des salles
+*/
+
+t_bool	ft_check_rooms(t_data *data, t_lst **lst)
+{
+	int		i;
+
+	ft_free_item(lst);
+	if (!ft_init_rooms(data, lst))
+		return (FALSE);
 	if (!(data->rooms = malloc(sizeof(t_room*) * data->nb_rooms)))
 		return (FALSE);
 	i = 0;
