@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   choose_path.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 10:20:10 by ccoupez           #+#    #+#             */
-/*   Updated: 2018/06/01 12:09:37 by ccoupez          ###   ########.fr       */
+/*   Updated: 2018/06/01 19:18:45 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
+/*
 int		compare_ways(t_path *actual, t_path *tmp)
 {
 	int		i;
@@ -25,24 +25,22 @@ int		compare_ways(t_path *actual, t_path *tmp)
 		{
 			if (actual->way[i] == tmp->way[j])
 			{
-				printf("not compatible!!!")
+				printf("not compatible!!!");
 				return (0);
-			}	
+			}
 			j++;
 		}
-		tmp = 
+		tmp =
 		i++;
 	}
 	return (1);
-
 }
 
-void	choose_ways(int nb_ant, int max_start, t_path *paths)
+void	choose_ways(int nb_ant, int max_start, t_path *ways)
 {
 	t_path	*actual;
 	t_path	*tmp;
 	int		nb;
-
 
 	actual = ways;
 	tmp = ways->next;
@@ -54,14 +52,14 @@ void	choose_ways(int nb_ant, int max_start, t_path *paths)
 			nb += compare_ways(actual, tmp);
 			tmp = tmp->next;
 		}
-		actual = actual->next
+		actual = actual->next;
 	}
 }
 
-int     nb_ways(t_data *graph)
+int		nb_ways(t_data *graph)
 {
 	int i;
-    int	nb;
+	int	nb;
 
 	i = 0;
 	nb = 0;
@@ -69,26 +67,4 @@ int     nb_ways(t_data *graph)
 		nb += graph->rooms[graph->entrance[i++]]->nb_link;
 	return (nb);
 }
-
-void	sort_ways(t_path *ways)
-{
-	t_path	*actual;
-	t_path	*tmp;
-
-	actual = ways;
-	while (actual)
-	{
-		tmp = actual->next;
-		while (tmp)
-		{
-			if (actual->len > tmp->len)
-			{
-				change_place(actual, tmp);
-				tmp = actual->next;
-			}
-			else
-				tmp = tmp->next;
-		}
-		actual = actual->next;
-	}
-}
+*/

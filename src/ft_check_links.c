@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_links.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/02 18:15:15 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/01 15:47:00 by ccoupez          ###   ########.fr       */
+/*   Updated: 2018/06/01 19:03:01 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,7 @@ int		ft_reach_link(char *link, t_room **rooms, int nbr_rooms, int to_test)
 }
 
 /*
-**	Je sais pu pour le moment
-**	Bah en faite, ca tri cree les liens !!!!
+**	Tri cree les liens
 */
 
 t_bool	ft_parse_link(t_lst *lst, t_room **rooms, int nbr_rooms, int to_test)
