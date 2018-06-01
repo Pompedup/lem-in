@@ -6,7 +6,7 @@
 /*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/30 12:33:23 by abezanni          #+#    #+#             */
-/*   Updated: 2018/05/28 15:09:01 by ccoupez          ###   ########.fr       */
+/*   Updated: 2018/06/01 15:50:43 by ccoupez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ t_bool	ft_init_room(char *str, int i_r, t_room **room)
 	room[i_r]->num_room = i_r;
 	room[i_r]->nb_link = 0;
 	room[i_r]->links = NULL;
-	room[i_r]->visited = 0;
 	ft_free_tab(words, 1);
 	return (TRUE);
 }
@@ -106,7 +105,7 @@ int		ft_count_rooms(t_lst *lst)
 **	Cree les tableaux d'entree ou de sortie
 */
 
-int		*ft_table_entrance_wayout(t_lst *lst, int nb, int entrance)
+int		*ft_tab_start_end(t_lst *lst, int nb, int entrance)
 {
 	int *back;
 	int i;
@@ -137,13 +136,11 @@ int		*ft_table_entrance_wayout(t_lst *lst, int nb, int entrance)
 t_bool	ft_check_rooms(t_data *data, t_lst **lst)
 {
 	int		i;
-	//int		to_send;
 
 	ft_free_item(lst);
-	if (!(data->entrance =
-		ft_table_entrance_wayout(*lst, data->nb_entrance, 1)))
+	if (!(data->entrance = ft_tab_start_end(*lst, data->nb_entrance, 1)))
 		return (FALSE);
-	if (!(data->wayout = ft_table_entrance_wayout(*lst, data->nb_wayout, 0)))
+	if (!(data->wayout = ft_tab_start_end(*lst, data->nb_wayout, 0)))
 		return (FALSE);
 	if ((data->nb_rooms = ft_count_rooms(*lst)) < 2)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 16:06:51 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/01 15:17:34 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/01 15:48:26 by ccoupez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ typedef struct		s_room
 	int				*links;
 	char			*name;
 	int				pos[2];
-	int				visited;
 }					t_room;
 
 typedef struct		s_data

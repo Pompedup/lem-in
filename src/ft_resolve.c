@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_resolve.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/23 16:17:36 by ccoupez           #+#    #+#             */
-/*   Updated: 2018/06/01 15:28:46 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/01 15:43:40 by ccoupez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int		not_on_the_way(int *way, int actual, int max)
 	while (way[i] != -1 && i < max)
 	{
 		if (way[i] == actual)
-			return(0);
+			return (0);
 		i++;
 	}
 	return (1);
@@ -45,7 +45,8 @@ void	deep_course(t_data *graph, t_path **path, t_room *room, int *visited)
 	while (i < graph->nb_wayout)
 		if (room == graph->rooms[graph->wayout[i++]])
 		{
-			ft_lst_path_pushback(path, ft_lst_path_new(visited, graph->nb_rooms));
+			ft_lst_path_pushback(path,
+			ft_lst_path_new(visited, graph->nb_rooms));
 			mark(visited, room->num_room, 0);
 			return ;
 		}
@@ -88,25 +89,25 @@ void	sort_ways(t_path *ways)
 
 int		ft_count_max_ways(t_data *data)
 {
-	int nb_link_entrance;
-	int nb_link_wayout;
+	int nb_link_start;
+	int nb_link_end;
 	int i;
 
 	i = 0;
-	nb_link_entrance = 0;
-	nb_link_wayout = 0;
+	nb_link_start = 0;
+	nb_link_end = 0;
 	while (i < data->nb_entrance)
 	{
-		nb_link_entrance += data->rooms[data->entrance[i]]->nb_link;
+		nb_link_start += data->rooms[data->entrance[i]]->nb_link;
 		i++;
 	}
 	i = 0;
 	while (i < data->nb_wayout)
 	{
-		nb_link_wayout += data->rooms[data->wayout[i]]->nb_link;
+		nb_link_end += data->rooms[data->wayout[i]]->nb_link;
 		i++;
 	}
-	return (nb_link_entrance > nb_link_wayout ? nb_link_wayout : nb_link_entrance);
+	return (nb_link_start > nb_link_end ? nb_link_end : nb_link_start);
 }
 
 t_bool	ft_check_if_present(t_path **ways, t_path *tocmp, int size)
@@ -116,38 +117,39 @@ t_bool	ft_check_if_present(t_path **ways, t_path *tocmp, int size)
 	i = 0;
 	while (i < size)
 	{
-		if (!(ft_int_tab_cmp(ways[i]->way + 1, tocmp->way + 1, ways[i]->len - 2, tocmp->len - 2)))
+		if (!(ft_int_tab_cmp(ways[i]->way + 1,
+		tocmp->way + 1, ways[i]->len - 2, tocmp->len - 2)))
 			return (FALSE);
 		i++;
 	}
 	return (TRUE);
 }
 
-t_bool	ft_search_ways(t_path **opti_ways, t_path *all_ways, int len_max, int nb_ways)
+t_bool	ft_search_ways(t_path **opti_p, t_path *all_p, int len_max, int nb_ways)
 {
 	t_path	*send;
 	int		i;
 
 	i = 0;
-	while (opti_ways[i])
+	while (opti_p[i])
 		i++;
-	while (all_ways && all_ways->len <= len_max)
+	while (all_p && all_p->len <= len_max)
 	{
-		if (i == 0 || ft_check_if_present(opti_ways, all_ways, i))
+		if (i == 0 || ft_check_if_present(opti_p, all_p, i))
 		{
-			opti_ways[i] = all_ways;
+			opti_p[i] = all_p;
 			if (i == nb_ways - 1)
 				return (TRUE);
-			send = all_ways->next;
+			send = all_p->next;
 			while (send && send->len <= len_max)
 			{
-				if (ft_search_ways(opti_ways, send, len_max, nb_ways))
+				if (ft_search_ways(opti_p, send, len_max, nb_ways))
 					return (TRUE);
 				send = send->next;
 			}
-			opti_ways[i] = NULL;
+			opti_p[i] = NULL;
 		}
-		all_ways = all_ways->next;
+		all_p = all_p->next;
 	}
 	return (FALSE);
 }
@@ -198,9 +200,10 @@ t_bool	search_best_ways(t_path *ways, t_data *data)
 	return (TRUE);
 }
 
-int     resolve(t_data *data)
+int		resolve(t_data *data)
 {
-	t_path 	*ways;
+	t_path	*ways;
+	t_path	*tmp;
 	int		tab[data->nb_rooms];
 	int		i;
 
@@ -212,10 +215,7 @@ int     resolve(t_data *data)
 	while (i < data->nb_entrance)
 		deep_course(data, &ways, data->rooms[data->entrance[i++]], tab);
 	sort_ways(ways);
-
-
-
-	t_path *tmp = ways;
+	tmp = ways;
 	while (ways)
 	{
 		i = 0;
