@@ -6,7 +6,7 @@
 /*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/02 18:15:15 by abezanni          #+#    #+#             */
-/*   Updated: 2018/05/28 16:07:43 by ccoupez          ###   ########.fr       */
+/*   Updated: 2018/06/01 15:47:00 by ccoupez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@
 
 char	*ft_islinked(char *link, char *name, int len_name)
 {
-	char *answer;
+	char	*answer;
 
 	if ((answer = ft_strstr(link, name)))
 	{
-		if (answer == link && answer[len_name]  == '-')
-				return (answer);
-		else if (answer[-1] == '-' && answer[len_name]  == '\0')
-				return (answer);
+		if (answer == link && answer[len_name] == '-')
+			return (answer);
+		else if (answer[-1] == '-' && answer[len_name] == '\0')
+			return (answer);
 	}
 	return (NULL);
 }
@@ -36,7 +36,7 @@ char	*ft_islinked(char *link, char *name, int len_name)
 
 int		ft_reach_link(char *link, t_room **rooms, int nbr_rooms, int to_test)
 {
-	int i;
+	int		i;
 
 	i = 0;
 	while (i < nbr_rooms)
@@ -66,13 +66,15 @@ t_bool	ft_parse_link(t_lst *lst, t_room **rooms, int nbr_rooms, int to_test)
 	i_tab = 0;
 	if (rooms[to_test]->nb_link == 0)
 		return (TRUE);
-	if (!(rooms[to_test]->links = malloc(sizeof(int) * rooms[to_test]->nb_link)))
+	if (!(rooms[to_test]->links =
+	malloc(sizeof(int) * rooms[to_test]->nb_link)))
 		return (FALSE);
 	while (lst && i_tab < rooms[to_test]->nb_link)
 	{
 		if ((pos = ft_islinked(lst->str, rooms[to_test]->name, len)))
 		{
-			rooms[to_test]->links[i_tab] = ft_reach_link(lst->str, rooms, nbr_rooms, to_test);
+			rooms[to_test]->links[i_tab] =
+			ft_reach_link(lst->str, rooms, nbr_rooms, to_test);
 			i_tab++;
 		}
 		lst = lst->next;
@@ -158,7 +160,7 @@ t_bool	ft_sort_table(int *tab, int size)
 t_bool	ft_check_links(t_data *data, t_lst *lst)
 {
 	int i;
-	//printf("aa\n");
+
 	if (!ft_corrects_links(data, lst))
 		return (FALSE);
 	i = 0;
@@ -166,7 +168,8 @@ t_bool	ft_check_links(t_data *data, t_lst *lst)
 	{
 		if (!ft_parse_link(lst, data->rooms, data->nb_rooms, i))
 			return (FALSE);
-		if (data->rooms[i]->nb_link > 1 && !ft_sort_table(data->rooms[i]->links, data->rooms[i]->nb_link))
+		if (data->rooms[i]->nb_link > 1 &&
+		!ft_sort_table(data->rooms[i]->links, data->rooms[i]->nb_link))
 			return (FALSE);
 		i++;
 	}
