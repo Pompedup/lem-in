@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 16:06:51 by abezanni          #+#    #+#             */
-/*   Updated: 2018/05/31 16:43:44 by ccoupez          ###   ########.fr       */
+/*   Updated: 2018/06/01 15:17:34 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ typedef struct		s_path
 {
 	int				*way;
 	int				len;
+	int				chosen;
 	struct s_path	*next;
-
 }					t_path;
 
 /*
@@ -116,4 +116,10 @@ t_path	*ft_lst_path_new(int *way, int max);
 void	ft_lst_path_pushback(t_path **begin, t_path *to_add);
 void	change_place(t_path *a, t_path *b);
 
+
+/*
+**	testing file
+*/
+
+void	print_values(t_path ***back);
 #endif

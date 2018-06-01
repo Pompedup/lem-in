@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+         #
+#    By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/25 16:13:40 by abezanni          #+#    #+#              #
-#    Updated: 2018/05/31 16:17:46 by ccoupez          ###   ########.fr        #
+#    Updated: 2018/06/01 15:17:52 by abezanni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,8 +27,9 @@ SRC_NAME =	lem_in.c\
 			ft_check_rooms.c\
 			ft_check_links.c\
 			ft_free_struct.c\
-			resolve.c \
-			lst_path.c
+			ft_resolve.c \
+			ft_lst_path.c\
+			file_for_testing.c\
 
 #SRC_NAME1 =
 
