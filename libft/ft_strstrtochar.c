@@ -1,43 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem_in.c                                           :+:      :+:    :+:   */
+/*   ft_strstrtochar.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/25 15:13:14 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/02 18:02:37 by abezanni         ###   ########.fr       */
+/*   Created: 2018/05/06 19:08:44 by abezanni          #+#    #+#             */
+/*   Updated: 2018/05/06 19:28:58 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "libft.h"
 
-/*
-**  Affiche une erreur
-*/
-
-int		ft_invalide_file(void)
+int	ft_strstrtochar(char *str, char *to_find, char c)
 {
-	ft_putendl_fd("ERROR", 2);
-	return (0);
-}
+	int i;
 
-/*
-**  Ai-je besoin de le préciser ?
-*/
-
-int		main(int ac, char **av)
-{
-	t_data data;
-
-	if (ac > 1)
-	{
-		ft_putendl("usage: lem-in < source_file");
-		exit(0);
-		(void)av;
-	}
-	if (!ft_parse(av[1], &data))
-		return (ft_invalide_file());
-	//ft_print_struct(&data);
-	return (0);
+	i = 0;
+	while (to_find[i] == str[i] && to_find[i])
+		i++;
+	return (!to_find[i] && str[i] == c ? i : 0);
 }

@@ -1,43 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem_in.c                                           :+:      :+:    :+:   */
+/*   ft_strncpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/25 15:13:14 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/02 18:02:37 by abezanni         ###   ########.fr       */
+/*   Created: 2017/11/06 17:21:59 by abezanni          #+#    #+#             */
+/*   Updated: 2018/05/04 10:49:48 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "libft.h"
 
 /*
-**  Affiche une erreur
+**	Copie len caractere de la chaine src dans la chaine dest
+**	en mettant des '\0' uniquement si la chaine src est plus courte que len
 */
 
-int		ft_invalide_file(void)
+char	*ft_strncpy(char *dest, const char *src, size_t len)
 {
-	ft_putendl_fd("ERROR", 2);
-	return (0);
-}
+	size_t i;
 
-/*
-**  Ai-je besoin de le préciser ?
-*/
-
-int		main(int ac, char **av)
-{
-	t_data data;
-
-	if (ac > 1)
+	i = 0;
+	while (i < len && src[i] != '\0')
 	{
-		ft_putendl("usage: lem-in < source_file");
-		exit(0);
-		(void)av;
+		dest[i] = src[i];
+		i++;
 	}
-	if (!ft_parse(av[1], &data))
-		return (ft_invalide_file());
-	//ft_print_struct(&data);
-	return (0);
+	while (i < len)
+	{
+		dest[i] = '\0';
+		i++;
+	}
+	return (dest);
 }

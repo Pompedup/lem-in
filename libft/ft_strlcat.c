@@ -1,43 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem_in.c                                           :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/25 15:13:14 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/02 18:02:37 by abezanni         ###   ########.fr       */
+/*   Created: 2017/11/08 16:07:30 by abezanni          #+#    #+#             */
+/*   Updated: 2017/11/13 16:36:25 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "libft.h"
 
-/*
-**  Affiche une erreur
-*/
-
-int		ft_invalide_file(void)
+size_t	ft_strlcat(char *dest, const char *src, size_t size)
 {
-	ft_putendl_fd("ERROR", 2);
-	return (0);
-}
+	size_t	i;
+	size_t	j;
+	size_t	full;
 
-/*
-**  Ai-je besoin de le préciser ?
-*/
-
-int		main(int ac, char **av)
-{
-	t_data data;
-
-	if (ac > 1)
-	{
-		ft_putendl("usage: lem-in < source_file");
-		exit(0);
-		(void)av;
-	}
-	if (!ft_parse(av[1], &data))
-		return (ft_invalide_file());
-	//ft_print_struct(&data);
-	return (0);
+	i = ft_strlen(dest);
+	j = ft_strlen(src);
+	if (size == 0)
+		return (j);
+	if (i > size)
+		i = size;
+	full = i + j;
+	j = -1;
+	while (src[++j] && i + j < size - 1)
+		dest[i + j] = src[j];
+	if (i + j < size)
+		dest[i + j] = '\0';
+	return (full);
 }

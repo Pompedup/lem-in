@@ -1,43 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem_in.c                                           :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/25 15:13:14 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/02 18:02:37 by abezanni         ###   ########.fr       */
+/*   Created: 2017/11/08 16:19:32 by abezanni          #+#    #+#             */
+/*   Updated: 2018/05/04 10:09:46 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "libft.h"
 
 /*
-**  Affiche une erreur
+**	Cherche la derniere apparition du caractere c dans la chaine str
 */
 
-int		ft_invalide_file(void)
+char	*ft_strrchr(const char *str, int c)
 {
-	ft_putendl_fd("ERROR", 2);
-	return (0);
-}
+	int i;
 
-/*
-**  Ai-je besoin de le préciser ?
-*/
-
-int		main(int ac, char **av)
-{
-	t_data data;
-
-	if (ac > 1)
+	i = ft_strlen(str);
+	while (i >= 0)
 	{
-		ft_putendl("usage: lem-in < source_file");
-		exit(0);
-		(void)av;
+		if (str[i] == c)
+			return ((char*)(str + i));
+		i--;
 	}
-	if (!ft_parse(av[1], &data))
-		return (ft_invalide_file());
-	//ft_print_struct(&data);
-	return (0);
+	return (NULL);
 }

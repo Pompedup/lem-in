@@ -1,43 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem_in.c                                           :+:      :+:    :+:   */
+/*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/25 15:13:14 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/02 18:02:37 by abezanni         ###   ########.fr       */
+/*   Created: 2017/11/06 15:56:15 by abezanni          #+#    #+#             */
+/*   Updated: 2018/03/21 14:51:56 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "libft.h"
 
-/*
-**  Affiche une erreur
-*/
-
-int		ft_invalide_file(void)
+int	ft_isprint(int c)
 {
-	ft_putendl_fd("ERROR", 2);
-	return (0);
-}
-
-/*
-**  Ai-je besoin de le préciser ?
-*/
-
-int		main(int ac, char **av)
-{
-	t_data data;
-
-	if (ac > 1)
-	{
-		ft_putendl("usage: lem-in < source_file");
-		exit(0);
-		(void)av;
-	}
-	if (!ft_parse(av[1], &data))
-		return (ft_invalide_file());
-	//ft_print_struct(&data);
-	return (0);
+	return (' ' <= c && c <= '~');
 }

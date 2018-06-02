@@ -1,43 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem_in.c                                           :+:      :+:    :+:   */
+/*   ft_memalloc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/25 15:13:14 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/02 18:02:37 by abezanni         ###   ########.fr       */
+/*   Created: 2017/11/08 16:36:31 by abezanni          #+#    #+#             */
+/*   Updated: 2017/11/08 21:47:49 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "libft.h"
 
-/*
-**  Affiche une erreur
-*/
-
-int		ft_invalide_file(void)
+void	*ft_memalloc(size_t size)
 {
-	ft_putendl_fd("ERROR", 2);
-	return (0);
-}
+	void *back;
 
-/*
-**  Ai-je besoin de le préciser ?
-*/
-
-int		main(int ac, char **av)
-{
-	t_data data;
-
-	if (ac > 1)
-	{
-		ft_putendl("usage: lem-in < source_file");
-		exit(0);
-		(void)av;
-	}
-	if (!ft_parse(av[1], &data))
-		return (ft_invalide_file());
-	//ft_print_struct(&data);
-	return (0);
+	if (!(back = (void *)malloc(size)))
+		return (NULL);
+	ft_bzero(back, size);
+	return (back);
 }

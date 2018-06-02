@@ -1,43 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem_in.c                                           :+:      :+:    :+:   */
+/*   ft_strsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/25 15:13:14 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/02 18:02:37 by abezanni         ###   ########.fr       */
+/*   Created: 2017/11/09 01:04:26 by abezanni          #+#    #+#             */
+/*   Updated: 2018/05/04 10:32:40 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "libft.h"
 
 /*
-**  Affiche une erreur
+**	Decoupe la chaine str en fonction du caractere c
 */
 
-int		ft_invalide_file(void)
+char			**ft_strsplit(const char *s, char c)
 {
-	ft_putendl_fd("ERROR", 2);
-	return (0);
-}
+	char	**back;
+	char	charset[2];
 
-/*
-**  Ai-je besoin de le préciser ?
-*/
-
-int		main(int ac, char **av)
-{
-	t_data data;
-
-	if (ac > 1)
-	{
-		ft_putendl("usage: lem-in < source_file");
-		exit(0);
-		(void)av;
-	}
-	if (!ft_parse(av[1], &data))
-		return (ft_invalide_file());
-	//ft_print_struct(&data);
-	return (0);
+	charset[0] = c;
+	charset[1] = 0;
+	return (back = ft_split_charset((char *)s, charset));
 }

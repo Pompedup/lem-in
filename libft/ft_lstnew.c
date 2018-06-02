@@ -1,43 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem_in.c                                           :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/25 15:13:14 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/02 18:02:37 by abezanni         ###   ########.fr       */
+/*   Created: 2017/11/09 12:25:51 by abezanni          #+#    #+#             */
+/*   Updated: 2018/02/14 18:01:29 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "libft.h"
 
-/*
-**  Affiche une erreur
-*/
-
-int		ft_invalide_file(void)
+t_list	*ft_lstnew(const void *content, size_t content_size)
 {
-	ft_putendl_fd("ERROR", 2);
-	return (0);
-}
+	t_list *back;
 
-/*
-**  Ai-je besoin de le préciser ?
-*/
-
-int		main(int ac, char **av)
-{
-	t_data data;
-
-	if (ac > 1)
+	if (!(back = (t_list*)malloc(sizeof(t_list))))
+		return (NULL);
+	if (content)
 	{
-		ft_putendl("usage: lem-in < source_file");
-		exit(0);
-		(void)av;
+		back->content = (void*)content;
+		back->content_size = content_size;
 	}
-	if (!ft_parse(av[1], &data))
-		return (ft_invalide_file());
-	//ft_print_struct(&data);
-	return (0);
+	else
+	{
+		back->content = NULL;
+		back->content_size = 0;
+	}
+	back->next = NULL;
+	return (back);
 }

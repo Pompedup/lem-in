@@ -1,43 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem_in.c                                           :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/25 15:13:14 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/02 18:02:37 by abezanni         ###   ########.fr       */
+/*   Created: 2017/11/08 16:06:56 by abezanni          #+#    #+#             */
+/*   Updated: 2018/05/04 10:39:08 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "libft.h"
 
-/*
-**  Affiche une erreur
-*/
-
-int		ft_invalide_file(void)
+int	ft_strncmp(const char *s1, const char *s2, size_t len)
 {
-	ft_putendl_fd("ERROR", 2);
-	return (0);
-}
-
-/*
-**  Ai-je besoin de le préciser ?
-*/
-
-int		main(int ac, char **av)
-{
-	t_data data;
-
-	if (ac > 1)
+	if (!len)
+		return (0);
+	while ((*s1 == *s2) && --len && *s1 && *s2)
 	{
-		ft_putendl("usage: lem-in < source_file");
-		exit(0);
-		(void)av;
+		s1++;
+		s2++;
 	}
-	if (!ft_parse(av[1], &data))
-		return (ft_invalide_file());
-	//ft_print_struct(&data);
-	return (0);
+	return (((unsigned char)*s1 - (unsigned char)*s2));
 }

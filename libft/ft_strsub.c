@@ -1,43 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem_in.c                                           :+:      :+:    :+:   */
+/*   ft_strsub.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/25 15:13:14 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/02 18:02:37 by abezanni         ###   ########.fr       */
+/*   Created: 2017/11/08 23:50:52 by abezanni          #+#    #+#             */
+/*   Updated: 2018/05/04 10:36:58 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "libft.h"
 
 /*
-**  Affiche une erreur
+**	Copie len caracteres de la chaine str depuis la position start
 */
 
-int		ft_invalide_file(void)
+char	*ft_strsub(const char *str, unsigned int start, size_t len)
 {
-	ft_putendl_fd("ERROR", 2);
-	return (0);
-}
+	char	*back;
 
-/*
-**  Ai-je besoin de le préciser ?
-*/
-
-int		main(int ac, char **av)
-{
-	t_data data;
-
-	if (ac > 1)
-	{
-		ft_putendl("usage: lem-in < source_file");
-		exit(0);
-		(void)av;
-	}
-	if (!ft_parse(av[1], &data))
-		return (ft_invalide_file());
-	//ft_print_struct(&data);
-	return (0);
+	if (!str)
+		return (NULL);
+	if (!(back = (char *)malloc(len + 1)))
+		return (NULL);
+	ft_strncpy(back, str + start, len);
+	back[len] = 0;
+	return (back);
 }

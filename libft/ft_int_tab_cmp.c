@@ -1,43 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem_in.c                                           :+:      :+:    :+:   */
+/*   ft_int_tab_cmp.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/25 15:13:14 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/02 18:02:37 by abezanni         ###   ########.fr       */
+/*   Created: 2018/05/31 17:14:33 by abezanni          #+#    #+#             */
+/*   Updated: 2018/06/01 15:13:38 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "libft.h"
 
-/*
-**  Affiche une erreur
-*/
+#include <stdio.h>
 
-int		ft_invalide_file(void)
+int	ft_int_tab_cmp(int *tab1, int *tab2, int size1, int size2)
 {
-	ft_putendl_fd("ERROR", 2);
-	return (0);
-}
+	int i;
+	int j;
 
-/*
-**  Ai-je besoin de le préciser ?
-*/
-
-int		main(int ac, char **av)
-{
-	t_data data;
-
-	if (ac > 1)
+	i = 0;
+	while (i < size1)
 	{
-		ft_putendl("usage: lem-in < source_file");
-		exit(0);
-		(void)av;
+		j = 0;
+		while (j < size2)
+		{
+			if (tab1[i] == tab2[j])
+				return (0);
+			j++;
+		}
+		i++;
 	}
-	if (!ft_parse(av[1], &data))
-		return (ft_invalide_file());
-	//ft_print_struct(&data);
-	return (0);
+	return (1);
 }
