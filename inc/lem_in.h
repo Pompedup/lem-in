@@ -27,8 +27,7 @@ typedef	struct s_lst	t_lst;
 struct			s_lst
 {
 	char		*str;
-	t_bool		entrance;
-	t_bool		wayout;
+	int			type;
 	t_lst		*next;
 };
 
@@ -51,10 +50,10 @@ typedef struct	s_data
 {
 	int			nb_rooms;
 	int			nb_ant;
-	int			nb_entrance;
-	int			nb_wayout;
-	int			*entrance;
-	int			*wayout;
+	int			nb_start;
+	int			nb_end;
+	int			*start;
+	int			*end;
 	t_room		**rooms;
 }				t_data;
 

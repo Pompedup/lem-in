@@ -32,39 +32,74 @@ t_bool	ft_go_to_the_room(int fd, char **line, t_lst *lst)
 }
 
 /*
-**  Récupère les lignes dans une liste chainée
+**Enregistre les commentaires
 */
 
-t_bool	ft_save_comment(int fd, char **line, )
+t_bool	ft_save_comment(int fd, char **line, t_lst **lst)
 {
-
+  char *cmt;
+  t_bool hash;
+  
+  if (!ft_strcmp("##start", *line) || !ft_strcmp("##end", *line))
+      return (FALSE);
+  cmt = *line;
+  hash = TRUE;
+  while (hash)
+  {
+    if (!get_next_line(fd, line))
+      return (FALSE);
+    if (!ft_strcmp("##start", *line) || !ft_strcmp("##end", *line))
+      return (TRUE);
+    if (**line == '#')
+      ft_strmjoin(cmt, *line, 3);
+    else
+      hash = FALSE;
+  }
+  ft_lst_pushback(lst, ft_lst_new(cmt, 3));
 	return (TRUE);
 }
+
+int ft_type(char *line)
+{
+	if (!ft_strcmp("##start", line))
+		return (1);
+	else if (!ft_strcmp("##end", line))
+		return (2);
+	else if (*line == '#')
+		return (3);
+	else
+		return (0);
+}
+
+/*
+**  Récupère les lignes dans une liste chainée
+*/
 
 t_bool	ft_get_lines(int fd, t_lst **lst, t_data *data)
 {
 	char *line;
+	int type;
 
 	while (get_next_line(fd, &line))
 	{
-		if (!ft_strcmp("##start", line))
+		type = ft_type(line);
+		if (type == 3)
 		{
-			if (!ft_go_to_the_room(fd, &line, *lst))
+			if (!ft_save_comment(int fd, char **line, t_lst **lst))
 				return (FALSE);
-			ft_lst_pushback(lst, ft_lst_new(line, 1));
-			data->nb_entrance++;
+			type = ft_type(line);
 		}
-		else if (!ft_strcmp("##end", line))
+		if (type == 1 || type == 2)
 		{
-			if (!ft_go_to_the_room(fd, &line, *lst))
-				return (FALSE);
-			ft_lst_pushback(lst, ft_lst_new(line, 2));
-			data->nb_wayout++;
-		}
-		else if (*line != '\0' && *line != '#')
-			ft_lst_pushback(lst, ft_lst_new(line, 0));
-		else
+			if (type == 1)
+              data->nb_start++;
+          	else
+              data->nb_end++;
 			free(line);
+			if (!get_next_line(fd, &line))
+				return (FALSE);
+		}
+		ft_lst_pushback(lst, ft_lst_new(line, type));
 	}
 	return (TRUE);
 }
