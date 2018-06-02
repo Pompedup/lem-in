@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_links.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adibou <adibou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/02 18:15:15 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/02 12:01:26 by adibou           ###   ########.fr       */
+/*   Updated: 2018/06/02 18:07:30 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ t_bool	ft_parse_link(t_lst *lst, t_room **rooms, int to_test, int *tab_nb_link)
 	int		len;
 	char	*cmt;
 
+	cmt = NULL;
 	len = ft_strlen(rooms[to_test]->name);
 	if (tab_nb_link[to_test] == 0)
 		return (TRUE);
