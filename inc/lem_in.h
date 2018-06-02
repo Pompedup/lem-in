@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adibou <adibou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 16:06:51 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/02 01:02:55 by adibou           ###   ########.fr       */
+/*   Updated: 2018/06/02 18:13:23 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void			ft_lst_pushback(t_lst **begin, t_lst *to_add);
 */
 
 t_bool			ft_check_int(int *value, char *str);
-t_bool			ft_parse(char *name, t_data *data);
+t_bool			ft_parse(t_data *data);
 
 
 
