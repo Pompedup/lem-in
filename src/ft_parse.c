@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adibou <adibou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 18:34:16 by abezanni          #+#    #+#             */
-/*   Updated: 2018/05/31 14:24:59 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/02 11:59:20 by adibou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,8 +125,8 @@ t_bool	ft_parse(char *name, t_data *data)
 	if (!(ft_get_lines(fd, &lst, data)))
 		return (ft_destroy(lst));
 	//ft_putendl("GetLines");
-	if (!ft_verify_files(lst))
-		return (ft_destroy(lst));
+	//if (!ft_verify_files(lst))
+	//	return (ft_destroy(lst));
 	//ft_print_data_lst(lst, data);
 	//ft_putendl("Donnees correctes");
 	if (!data->nb_entrance || !data->nb_wayout || !lst)
@@ -134,15 +134,15 @@ t_bool	ft_parse(char *name, t_data *data)
 	//ft_putendl("Entree Sortie Donnes");
 	if (!ft_check_int(&(data->nb_ant), lst->str))
 		return (ft_destroy(lst));
-	//ft_putendl("Les fourmiiiiies");
+	ft_putendl("Les fourmiiiiies");
 	if (!(ft_check_rooms(data, &lst)))
 		return (ft_destroy(lst));
-	//ft_print_rooms(data);
-	//ft_putendl("Les salles sont pretes");
-	//ft_print_data_lst(lst, data);
+	ft_print_rooms(data);
+	ft_putendl("Les salles sont pretes");
+	ft_print_data_lst(lst, data);
 	if (!(ft_check_links(data, lst)))
 		return (ft_destroy(lst));
-	//ft_print_data(data);
-	//ft_putendl("Les salles sont pretes");
+	ft_print_data(data);
+	ft_putendl("Les salles sont pretes");
 	return (TRUE);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adibou <adibou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 16:06:51 by abezanni          #+#    #+#             */
-/*   Updated: 2018/05/31 14:30:11 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/02 01:02:55 by adibou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,18 @@ struct			s_lst
 	t_lst		*next;
 };
 
+typedef	struct s_link
+{
+	char		*cmt;
+	int			link;
+}				t_link;
+
 typedef struct	s_room
 {
 	char		*name;
+	char		*cmt;
 	int			num_room;
-	int			nb_link;
-	int			*links;
+	t_link		**links;
 	int			pos[2];
 }				t_room;
 

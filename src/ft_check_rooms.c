@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_rooms.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adibou <adibou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/30 12:33:23 by abezanni          #+#    #+#             */
-/*   Updated: 2018/05/31 14:34:23 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/02 00:38:16 by adibou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ t_bool	ft_init_room(char *str, int i_r, t_room **room)
 	}
 	room[i_r]->name = words[0];
 	room[i_r]->num_room = i_r;
-	room[i_r]->nb_link = 0;
 	room[i_r]->links = NULL;
 	ft_free_tab(words, 1);
 	return (TRUE);
@@ -148,8 +147,9 @@ t_bool	ft_check_rooms(t_data *data, t_lst **lst)
 		data->nb_rooms = 0;
 		return (ft_free_t_data(data));
 	}
-	if (!(data->rooms = malloc(sizeof(t_room*) * data->nb_rooms)))
+	if (!(data->rooms = malloc(sizeof(t_room*) * (data->nb_rooms + 1))))
 		return (ft_free_t_data(data));
+	data->rooms[data->nb_rooms] = NULL;
 	i = 0;
 	while (i < data->nb_rooms)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_links.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adibou <adibou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/02 18:15:15 by abezanni          #+#    #+#             */
-/*   Updated: 2018/05/31 14:36:03 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/02 12:01:26 by adibou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ char	*ft_islinked(char *link, char *name, int len_name)
 **	Retourne la salle liee
 */
 
-int		ft_reach_link(char *link, t_room **rooms, int nbr_rooms, int to_test)
+int		ft_reach_link(char *link, t_room **rooms, int to_test)
 {
 	int i;
 
 	i = 0;
-	while (i < nbr_rooms)
+	while (rooms[i])
 	{
 		if (i != to_test)
 		{
@@ -56,23 +56,28 @@ int		ft_reach_link(char *link, t_room **rooms, int nbr_rooms, int to_test)
 **	Bah en faite, ca tri cree les liens !!!!
 */
 
-t_bool	ft_parse_link(t_lst *lst, t_room **rooms, int nbr_rooms, int to_test)
+t_bool	ft_parse_link(t_lst *lst, t_room **rooms, int to_test, int *tab_nb_link)
 {
 	int		i_tab;
 	char	*pos;
 	int		len;
+	char	*cmt;
 
 	len = ft_strlen(rooms[to_test]->name);
-	i_tab = 0;
-	if (rooms[to_test]->nb_link == 0)
+	if (tab_nb_link[to_test] == 0)
 		return (TRUE);
-	if (!(rooms[to_test]->links = malloc(sizeof(int) * rooms[to_test]->nb_link)))
+	if (!(rooms[to_test]->links = malloc(sizeof(t_link*) * (tab_nb_link[to_test] + 1))))
 		return (FALSE);
-	while (lst && i_tab < rooms[to_test]->nb_link)
+	rooms[to_test]->links[tab_nb_link[to_test]] = NULL;
+	i_tab = 0;
+	while (lst && i_tab < tab_nb_link[to_test])
 	{
 		if ((pos = ft_islinked(lst->str, rooms[to_test]->name, len)))
 		{
-			rooms[to_test]->links[i_tab] = ft_reach_link(lst->str, rooms, nbr_rooms, to_test);
+			if (!(rooms[to_test]->links = malloc(sizeof(t_link) * (tab_nb_link[to_test] + 1))))
+				return (FALSE);
+			rooms[to_test]->links[i_tab]->link = ft_reach_link(lst->str, rooms, to_test);
+			rooms[to_test]->links[i_tab]->cmt = cmt;
 			i_tab++;
 		}
 		lst = lst->next;
@@ -84,7 +89,7 @@ t_bool	ft_parse_link(t_lst *lst, t_room **rooms, int nbr_rooms, int to_test)
 **	Teste les noms des liens pour verifier s'ils sont tous repertories
 */
 
-t_bool	ft_verif_links_names(t_room **rooms, int nbr_rooms, char *link)
+t_bool	ft_verif_links_names(t_room **rooms, int nbr_rooms, char *link, int *tab_nb_link)
 {
 	int i;
 	int j;
@@ -96,11 +101,11 @@ t_bool	ft_verif_links_names(t_room **rooms, int nbr_rooms, char *link)
 		i++;
 	if (!dash)
 		return (FALSE);
-	rooms[i]->nb_link++;
+	tab_nb_link[i]++;
 	j = 0;
 	while (j < nbr_rooms && ft_strcmp(rooms[j]->name, link + dash + 1))
 		j++;
-	rooms[j]->nb_link++;
+	tab_nb_link[j]++;
 	return (j == nbr_rooms || i == j ? FALSE : TRUE);
 }
 
@@ -108,11 +113,11 @@ t_bool	ft_verif_links_names(t_room **rooms, int nbr_rooms, char *link)
 **	Verifier si la liste est correcte
 */
 
-t_bool	ft_corrects_links(t_data *data, t_lst *lst)
+t_bool	ft_corrects_links(t_data *data, t_lst *lst, int *tab_nb_link)
 {
 	while (lst)
 	{
-		if (!(ft_verif_links_names(data->rooms, data->nb_rooms, lst->str)))
+		if (!(ft_verif_links_names(data->rooms, data->nb_rooms, lst->str, tab_nb_link)))
 			return (FALSE);
 		lst = lst->next;
 	}
@@ -123,15 +128,15 @@ t_bool	ft_corrects_links(t_data *data, t_lst *lst)
 **	Tri un tableau d'int et precise s'il n'y a pas des doubles
 */
 
-t_bool	ft_sort_table(int *tab, int size)
+t_bool	ft_sort_table(t_link **tab)
 {
 	int i;
-	int swap;
+	t_link *swap;
 
 	i = 0;
-	while (i < size - 1)
+	while (tab[i + 1])
 	{
-		if (tab[i] > tab[i + 1])
+		if (tab[i]->link > tab[i + 1]->link)
 		{
 			swap = tab[i];
 			tab[i] = tab[i + 1];
@@ -142,9 +147,9 @@ t_bool	ft_sort_table(int *tab, int size)
 			i++;
 	}
 	i = 0;
-	while (i < size - 1)
+	while (tab[i + 1])
 	{
-		if (tab[i] == tab[i + 1])
+		if (tab[i]->link == tab[i + 1]->link)
 			return (FALSE);
 		i++;
 	}
@@ -158,15 +163,19 @@ t_bool	ft_sort_table(int *tab, int size)
 t_bool	ft_check_links(t_data *data, t_lst *lst)
 {
 	int i;
+	int tab_nb_link[data->nb_rooms];
 
-	if (!ft_corrects_links(data, lst))
+	if (!ft_corrects_links(data, lst, tab_nb_link))
 		return (ft_free_t_data(data));
 	i = 0;
 	while (i < data->nb_rooms)
+		tab_nb_link[i] = 0;
+	i = 0;
+	while (i < data->nb_rooms)
 	{
-		if (!ft_parse_link(lst, data->rooms, data->nb_rooms, i))
+		if (!ft_parse_link(lst, data->rooms, i, tab_nb_link))
 			return (ft_free_t_data(data));
-		if (data->rooms[i]->nb_link > 1 && !ft_sort_table(data->rooms[i]->links, data->rooms[i]->nb_link))
+		if (tab_nb_link[i] > 1 && !ft_sort_table(data->rooms[i]->links))
 			return (ft_free_t_data(data));
 		i++;
 	}

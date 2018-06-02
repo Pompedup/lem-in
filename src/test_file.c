@@ -25,9 +25,9 @@ void	ft_print_data(t_data *data)
 	while (i < data->nb_rooms)
 	{
 		j = 0;
-		printf("\n\n\nindice  		%d\nnb link			%d\n", i, test[i]->nb_link);
-		while (j < test[i]->nb_link)
-			ft_putnbrendl(test[i]->links[j++]);
+		//printf("\n\n\nindice  		%d\nnb link			%d\n", i, test[i]->nb_link);
+		while (test[i]->links[j])
+			ft_putnbrendl(test[i]->links[j++]->link);
 		i++;
 	}
 }
