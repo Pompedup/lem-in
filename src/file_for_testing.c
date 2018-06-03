@@ -6,7 +6,7 @@
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 15:15:51 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/01 18:42:01 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/03 17:42:01 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,15 +75,15 @@ void	ft_print_rooms(t_data *data)
 		i++;
 	}
 	i = 0;
-	while (i < data->nb_entrance)
+	while (i < data->nb_start)
 	{
-		printf("\nEntree :%d\n", data->entrance[i++]);
-		ft_putendl(data->rooms[data->entrance[i++]]->name);
+		printf("\nEntree :%d\n", data->start[i++]);
+		ft_putendl(data->rooms[data->start[i++]]->name);
 	}
 	i = 0;
-	while (i < data->nb_wayout)
+	while (i < data->nb_end)
 	{
-		printf("Sortie :%d\n", data->wayout[i++]);
-		ft_putendl(data->rooms[data->wayout[i++]]->name);
+		printf("Sortie :%d\n", data->end[i++]);
+		ft_putendl(data->rooms[data->end[i++]]->name);
 	}
 }

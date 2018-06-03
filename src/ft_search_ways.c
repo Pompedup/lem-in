@@ -6,7 +6,7 @@
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 18:47:38 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/01 19:57:25 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/03 17:41:34 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ void	deep_course(t_data *graph, t_path **path, t_room *room, int *visited)
 
 	mark(visited, room->num_room, 1);
 	i = 0;
-	while (i < graph->nb_wayout)
-		if (room == graph->rooms[graph->wayout[i++]])
+	while (i < graph->nb_end)
+		if (room == graph->rooms[graph->end[i++]])
 		{
 			ft_lst_path_pushback(path,
 			ft_lst_path_new(visited, graph->nb_rooms));
@@ -92,7 +92,7 @@ void	ft_search_ways(t_data *data, t_path **ways)
 	while (i < data->nb_rooms)
 		tab[i++] = -1;
 	i = 0;
-	while (i < data->nb_entrance)
-		deep_course(data, ways, data->rooms[data->entrance[i++]], tab);
+	while (i < data->nb_start)
+		deep_course(data, ways, data->rooms[data->start[i++]], tab);
 	sort_ways(*ways);
 }

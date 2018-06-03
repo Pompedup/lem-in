@@ -6,7 +6,7 @@
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/02 18:15:15 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/01 19:03:01 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/03 18:46:38 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,8 @@ t_bool	ft_verif_links_names(t_room **rooms, int nbr_rooms, char *link)
 	j = 0;
 	while (j < nbr_rooms && ft_strcmp(rooms[j]->name, link + dash + 1))
 		j++;
-	rooms[j]->nb_link++;
+	if (j != nbr_rooms)
+		rooms[j]->nb_link++;
 	return (j == nbr_rooms || i == j ? FALSE : TRUE);
 }
 
@@ -113,6 +114,8 @@ t_bool	ft_corrects_links(t_data *data, t_lst *lst)
 {
 	while (lst)
 	{
+		if (data->option & 1)
+			ft_putendl(lst->str);
 		if (!(ft_verif_links_names(data->rooms, data->nb_rooms, lst->str)))
 			return (FALSE);
 		lst = lst->next;

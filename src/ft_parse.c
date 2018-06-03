@@ -6,7 +6,7 @@
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 18:34:16 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/03 15:59:37 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/03 18:53:25 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,35 +72,61 @@ t_bool	ft_go_to_the_room(int fd, char **line, t_lst *lst)
 }
 
 /*
+**	Verifie de quelle commande il s'agit et l'ajoute
+*/
+
+void	ft_check_cmd(t_data *data, t_lst **lst, char * line)
+{
+	int type;
+
+	type = -2;
+	ft_lst_pushback(lst, ft_lst_new(line, -1));
+	if (!ft_strcmp("##start", line))
+	{
+		type = 1;
+		data->nb_start++;
+	}
+	else if (!ft_strcmp("##end", line))
+	{
+		type = 2;
+		data->nb_end++;
+	}
+	get_next_line(0, &line);
+	ft_lst_pushback(lst, ft_lst_new(line, type));
+}
+
+/*
 **  Récupère les lignes dans une liste chainée
 */
 
-t_bool	ft_get_lines(int fd, t_lst **lst, t_data *data)
+t_lst	*ft_get_lines(t_lst *lst, t_data *data)
 {
 	char *line;
 
-	while (get_next_line(fd, &line))
+	while (get_next_line(0, &line))
 	{
-		if (!ft_strcmp("##start", line))
-		{
-			if (!ft_go_to_the_room(fd, &line, *lst))
-				return (FALSE);
-			ft_lst_pushback(lst, ft_lst_new(line, 1));
-			data->nb_entrance++;
-		}
-		else if (!ft_strcmp("##end", line))
-		{
-			if (!ft_go_to_the_room(fd, &line, *lst))
-				return (FALSE);
-			ft_lst_pushback(lst, ft_lst_new(line, 2));
-			data->nb_wayout++;
-		}
-		else if (*line != '\0' && *line != '#')
-			ft_lst_pushback(lst, ft_lst_new(line, 0));
+		if (ft_strnstr(line, "##", 2))
+			ft_check_cmd(data, &lst, line);
+		else if (*line == '#')
+			ft_lst_pushback(&lst, ft_lst_new(line, -1));
 		else
-			free(line);
+			ft_lst_pushback(&lst, ft_lst_new(line, 0));
 	}
-	return (TRUE);
+	return (lst);
+}
+
+void	ft_print_free_lst(t_lst *lst, t_bool print)
+{
+	t_lst *tmp;
+	while (lst)
+	{
+		if (print)
+			ft_putendl(lst->str);
+		tmp = lst->next;
+		free(lst->str);
+		free(lst);
+		lst = tmp;
+	}
 }
 
 /*
@@ -108,41 +134,32 @@ t_bool	ft_get_lines(int fd, t_lst **lst, t_data *data)
 **  données s'il est valide
 */
 
-t_bool	ft_parse(char *name, t_data *data)
+t_bool	ft_parse(t_data *data)
 {
-	int		fd;
 	t_lst	*lst;
+	t_lst	*save_first;
 
-	fd = open(name, O_RDONLY);
 	lst = NULL;
 	data->nb_rooms = 0;
-	data->nb_entrance = 0;
-	data->nb_wayout = 0;
-	data->entrance = NULL;
-	data->wayout = NULL;
+	data->nb_start = 0;
+	data->nb_end = 0;
+	data->start = NULL;
+	data->end = NULL;
 	data->rooms = NULL;
-	//ft_putendl("WeGo");
-	if (!(ft_get_lines(fd, &lst, data)))
-		return (ft_destroy(lst));
-	//ft_putendl("GetLines");
-	//if (!ft_verify_files(lst))
-	//	return (ft_destroy(lst));
-	//ft_print_data_lst(lst, data);
-	//ft_putendl("Donnees correctes");
-	if (!data->nb_entrance || !data->nb_wayout || !lst)
-		return (ft_destroy(lst));
-	//ft_putendl("Entree Sortie Donnes");
+	if (!(lst = ft_get_lines(lst, data)))
+		return (FALSE);
+	save_first = lst;
+	if (!data->nb_start || !data->nb_end || !lst)
+		return (ft_destroy(save_first));
+	if (data->option & 1)
+		ft_putendl(lst->str);
 	if (!ft_check_int(&(data->nb_ant), lst->str))
-		return (ft_destroy(lst));
-	ft_putendl("Les fourmiiiiies");
+		return (ft_destroy(save_first));
+	lst = lst->next;
 	if (!(ft_check_rooms(data, &lst)))
-		return (ft_destroy(lst));
-	ft_print_rooms(data);
-	ft_putendl("Les salles sont pretes");
-	ft_print_data_lst(lst, data);
+		return (ft_destroy(save_first));
 	if (!(ft_check_links(data, lst)))
-		return (ft_destroy(lst));
-	ft_print_data(data);
-	ft_putendl("Les salles sont pretes");
+		return (ft_destroy(save_first));
+	ft_print_free_lst(save_first, !(data->option & 1));
 	return (TRUE);
 }

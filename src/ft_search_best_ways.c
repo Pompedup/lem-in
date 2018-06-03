@@ -6,7 +6,7 @@
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 18:54:06 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/01 19:28:48 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/03 17:41:05 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,15 @@ int		ft_count_max_ways(t_data *data)
 	i = 0;
 	nb_link_start = 0;
 	nb_link_end = 0;
-	while (i < data->nb_entrance)
+	while (i < data->nb_start)
 	{
-		nb_link_start += data->rooms[data->entrance[i]]->nb_link;
+		nb_link_start += data->rooms[data->start[i]]->nb_link;
 		i++;
 	}
 	i = 0;
-	while (i < data->nb_wayout)
+	while (i < data->nb_end)
 	{
-		nb_link_end += data->rooms[data->wayout[i]]->nb_link;
+		nb_link_end += data->rooms[data->end[i]]->nb_link;
 		i++;
 	}
 	return (nb_link_start > nb_link_end ? nb_link_end : nb_link_start);

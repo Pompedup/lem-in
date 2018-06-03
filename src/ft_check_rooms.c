@@ -6,7 +6,7 @@
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/30 12:33:23 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/01 19:07:18 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/03 18:57:17 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ t_bool	ft_verif_no_double(t_room **rooms, int nbr_rooms)
 **  Remplis une salle avec les données disponibles
 */
 
-t_bool	ft_init_room(char *str, int i_r, t_room **room)
+t_bool	ft_create_room(char *str, int i_r, t_room **room)
 {
 	char	**words;
 
@@ -93,9 +93,10 @@ int		ft_count_rooms(t_lst *lst)
 	int		nbr_rooms;
 
 	nbr_rooms = 0;
-	while (ft_nbr_words_charset(lst->str, " \t") == 3)
+	while (ft_nbr_words_charset(lst->str, " \t") == 3 || *lst->str == '#')
 	{
-		nbr_rooms++;
+		if (*lst->str != '#')
+			nbr_rooms++;
 		lst = lst->next;
 	}
 	return (nbr_rooms);
@@ -105,7 +106,7 @@ int		ft_count_rooms(t_lst *lst)
 **	Cree les tableaux d'entree ou de sortie
 */
 
-int		*ft_tab_start_end(t_lst *lst, int nb, int entrance)
+int		*ft_tab_start_end(t_lst *lst, int nb, int start)
 {
 	int *back;
 	int i;
@@ -117,9 +118,10 @@ int		*ft_tab_start_end(t_lst *lst, int nb, int entrance)
 	j = 0;
 	while (i < nb)
 	{
-		while ((entrance ? lst->entrance : lst->wayout) == 0)
+		while (lst->type != (start ? 1 : 2))
 		{
-			j++;
+			if (*lst->str != '#')
+				j++;
 			lst = lst->next;
 		}
 		back[i] = j++;
@@ -131,9 +133,9 @@ int		*ft_tab_start_end(t_lst *lst, int nb, int entrance)
 
 t_bool	ft_init_rooms(t_data *data, t_lst **lst)
 {
-	if (!(data->entrance = ft_tab_start_end(*lst, data->nb_entrance, 1)))
+	if (!(data->start = ft_tab_start_end(*lst, data->nb_start, 1)))
 		return (FALSE);
-	if (!(data->wayout = ft_tab_start_end(*lst, data->nb_wayout, 0)))
+	if (!(data->end = ft_tab_start_end(*lst, data->nb_end, 0)))
 		return (FALSE);
 	if ((data->nb_rooms = ft_count_rooms(*lst)) < 2)
 	{
@@ -151,21 +153,25 @@ t_bool	ft_check_rooms(t_data *data, t_lst **lst)
 {
 	int		i;
 
-	ft_free_item(lst);
 	if (!ft_init_rooms(data, lst))
 		return (FALSE);
-	if (!(data->rooms = malloc(sizeof(t_room*) * data->nb_rooms)))
+	if (!(data->rooms = malloc(sizeof(t_room*) * (data->nb_rooms + 1))))
 		return (FALSE);
 	i = 0;
 	while (i < data->nb_rooms)
 	{
-		if (!ft_init_room((*lst)->str, i, data->rooms))
+		if (data->option & 1)
+			ft_putendl((*lst)->str);
+		if ((*lst)->type >= 0)
 		{
-			data->nb_rooms = i;
-			return (FALSE);
+			if (!ft_create_room((*lst)->str, i, data->rooms))
+			{
+				data->nb_rooms = i;
+				return (FALSE);
+			}
+			i++;
 		}
-		ft_free_item(lst);
-		i++;
+		*lst = (*lst)->next;
 	}
 	if (!ft_verif_no_double(data->rooms, data->nb_rooms))
 		return (FALSE);
