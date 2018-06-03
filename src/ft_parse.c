@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adibou <adibou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 18:34:16 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/02 11:59:20 by adibou           ###   ########.fr       */
+/*   Updated: 2018/06/03 15:44:26 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ t_bool	ft_check_int(int *value, char *str)
 		!ft_strisall(*str == '+' ? str + 1 : str, ISDIGIT))
 		return (FALSE);
 	*value = ft_atoi(str);
+	free(str);
 	return (TRUE);
 }
 
@@ -71,16 +72,33 @@ t_bool	ft_go_to_the_room(int fd, char **line, t_lst *lst)
 	return (TRUE);
 }
 
+t_bool	ft_get_ants(t_data *data, char *line)
+{
+	if (ft_check_int(data->nb_ant))
+		return (FALSE);
+	return (TRUE);
+}
+
 /*
 **  Récupère les lignes dans une liste chainée
 */
 
-t_bool	ft_get_lines(int fd, t_lst **lst, t_data *data)
+t_bool	ft_get_lines(t_lst **lst, t_data *data, int step)
 {
 	char *line;
 
-	while (get_next_line(fd, &line))
+	while (get_next_line(0, &line))
 	{
+		ft_putendl(line);
+		if (step == 0 && !ft_check_int(data->nb_ant, line))
+			return (FALSE);
+		else if (step == 1)
+	}
+	return (TRUE);
+}
+
+
+
 		if (!ft_strcmp("##start", line))
 		{
 			if (!ft_go_to_the_room(fd, &line, *lst))
@@ -99,9 +117,7 @@ t_bool	ft_get_lines(int fd, t_lst **lst, t_data *data)
 			ft_lst_pushback(lst, ft_lst_new(line, 0));
 		else
 			free(line);
-	}
-	return (TRUE);
-}
+
 
 /*
 **  Lis le fichier envoyé en paramètre, le test et retourne les
@@ -111,9 +127,10 @@ t_bool	ft_get_lines(int fd, t_lst **lst, t_data *data)
 t_bool	ft_parse(char *name, t_data *data)
 {
 	int		fd;
+	int		step;
 	t_lst	*lst;
 
-	fd = open(name, O_RDONLY);
+	step = 0;
 	lst = NULL;
 	data->nb_rooms = 0;
 	data->nb_entrance = 0;
@@ -122,13 +139,20 @@ t_bool	ft_parse(char *name, t_data *data)
 	data->wayout = NULL;
 	data->rooms = NULL;
 	//ft_putendl("WeGo");
-	if (!(ft_get_lines(fd, &lst, data)))
+	if (!(ft_get_lines(&lst, data, step)))
 		return (ft_destroy(lst));
 	//ft_putendl("GetLines");
 	//if (!ft_verify_files(lst))
 	//	return (ft_destroy(lst));
 	//ft_print_data_lst(lst, data);
 	//ft_putendl("Donnees correctes");
+
+
+
+
+
+
+
 	if (!data->nb_entrance || !data->nb_wayout || !lst)
 		return (ft_destroy(lst));
 	//ft_putendl("Entree Sortie Donnes");
