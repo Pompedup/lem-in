@@ -6,13 +6,13 @@
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 15:13:14 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/01 19:56:37 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/03 18:23:28 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void	ft_print_struct(t_data *data)
+void	ft_print_structe(t_data *data)
 {
 	int		i;
 	t_room	*room;
@@ -53,12 +53,12 @@ int		main(int ac, char **av)
 {
 	t_data data;
 
-	if (ac != 2)
+	if (ac > 1)
 	{
-		ft_putendl("usage: lem-in source_file");
-		exit(0);
+		(void)av;
+		data.option = 1;
 	}
-	if (!ft_parse(av[1], &data))
+	if (!ft_parse(&data))
 		return (ft_invalide_file());
 	//ft_print_struct(&data);
 	ft_resolve(&data);

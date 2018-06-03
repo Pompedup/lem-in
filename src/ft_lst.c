@@ -6,7 +6,7 @@
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 17:37:13 by abezanni          #+#    #+#             */
-/*   Updated: 2018/05/06 19:03:53 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/03 17:40:05 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,14 @@ void	ft_free_item(t_lst **lst)
 **  Créé un nouvel élément de type lst
 */
 
-t_lst	*ft_lst_new(char *str, int passage)
+t_lst	*ft_lst_new(char *str, int type)
 {
 	t_lst *lst;
 
 	if (!(lst = malloc(sizeof(t_lst))))
 		return (NULL);
 	lst->str = str;
-	lst->entrance = passage % 2;
-	lst->wayout = passage / 2;
+	lst->type = type;
 	lst->next = NULL;
 	return (lst);
 }

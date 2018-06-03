@@ -6,7 +6,7 @@
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/23 16:17:36 by ccoupez           #+#    #+#             */
-/*   Updated: 2018/06/01 19:56:29 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/03 18:27:43 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,21 @@
 int		ft_resolve(t_data *data)
 {
 	t_path	*ways;
-	t_path	*tmp;
+	//t_path	*tmp;
 	int		i;
 
 	i = 0;
 	ways = NULL;
 	ft_search_ways(data, &ways);
-	tmp = ways;
-	while (ways)
-	{
-		i = 0;
-		while (i < ways->len)
-			i++;
-		ways = ways->next;
-	}
-	ways = tmp;
+	//tmp = ways;
+	//while (ways)
+	//{
+	//	i = 0;
+	//	while (i < ways->len)
+	//		i++;
+	//	ways = ways->next;
+	//}
+	//ways = tmp;
 	ft_search_best_ways(ways, data);
 	return (0);
 }
