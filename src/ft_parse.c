@@ -6,7 +6,7 @@
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 18:34:16 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/01 19:27:21 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/03 15:59:37 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,20 +103,6 @@ t_bool	ft_get_lines(int fd, t_lst **lst, t_data *data)
 	return (TRUE);
 }
 
-void	ft_print_data_lst(t_lst *lst, t_data *data)
-{
-	ft_putendl("");
-	ft_putnbrendl(data->nb_entrance);
-	ft_putnbrendl(data->nb_wayout);
-	ft_putendl("");
-	while (lst)
-	{
-		ft_putendl(lst->str);
-		lst = lst->next;
-	}
-	ft_putendl("");
-}
-
 /*
 **  Lis le fichier envoyé en paramètre, le test et retourne les
 **  données s'il est valide
@@ -137,26 +123,26 @@ t_bool	ft_parse(char *name, t_data *data)
 	data->rooms = NULL;
 	//ft_putendl("WeGo");
 	if (!(ft_get_lines(fd, &lst, data)))
-		return (FALSE);
-	//ft_putendl("GetLines");
-	if (!ft_verify_files(lst))
 		return (ft_destroy(lst));
-//	ft_print_data_lst(lst, data);
+	//ft_putendl("GetLines");
+	//if (!ft_verify_files(lst))
+	//	return (ft_destroy(lst));
+	//ft_print_data_lst(lst, data);
 	//ft_putendl("Donnees correctes");
 	if (!data->nb_entrance || !data->nb_wayout || !lst)
 		return (ft_destroy(lst));
 	//ft_putendl("Entree Sortie Donnes");
 	if (!ft_check_int(&(data->nb_ant), lst->str))
 		return (ft_destroy(lst));
-	//ft_putendl("Les fourmiiiiies");
+	ft_putendl("Les fourmiiiiies");
 	if (!(ft_check_rooms(data, &lst)))
 		return (ft_destroy(lst));
-	//ft_print_rooms(data);
-	//ft_putendl("Les salles sont pretes");
-	//ft_print_data_lst(lst, data);
+	ft_print_rooms(data);
+	ft_putendl("Les salles sont pretes");
+	ft_print_data_lst(lst, data);
 	if (!(ft_check_links(data, lst)))
 		return (ft_destroy(lst));
-	//ft_print_data(data);
-	//ft_putendl("2Les salles sont pretes");
+	ft_print_data(data);
+	ft_putendl("Les salles sont pretes");
 	return (TRUE);
 }
