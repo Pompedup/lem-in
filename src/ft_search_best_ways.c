@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_search_best_ways.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adibou <adibou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 18:54:06 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/04 17:29:45 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/05 01:34:51 by adibou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,10 +141,10 @@ t_path	***ft_search_best_ways(t_path *ways, t_data *data)
 	nb_max_ways = ft_count_max_ways(data);
 	if (!(back = malloc(sizeof(t_path **) * nb_max_ways + 1)))
 		return (NULL);
-	printf("[%d]\n", nb_max_ways);
+	//printf("[%d]\n", nb_max_ways);
 	back[nb_max_ways] = NULL;
 	while (nb_max_ways--)
 		back[nb_max_ways] = ft_check_optis_ways(ways, nb_max_ways + 1);
-	print_values(back);
+	//print_values(back);
 	return (back);
 }

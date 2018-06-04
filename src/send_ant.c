@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   send_ant.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adibou <adibou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/04 11:39:42 by ccoupez           #+#    #+#             */
-/*   Updated: 2018/06/04 18:11:03 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/05 01:33:45 by adibou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,85 @@ t_bool	ft_add_ant(t_walk **walk, int nb, t_path *way)
 	return (TRUE);
 }
 
+int		ft_test(int i, int *max)
+{
+	int tab[2][3];
+
+	tab[0][0] = i + 1;
+	tab[0][1] = max[i];
+	tab[0][2] = i + 1;
+	tab[1][0] = i+ 2;
+	tab[1][1] = max[i + 1];
+	tab[1][2] = i + 2;
+	while (tab[0][1] < tab[1][1])
+	{
+		tab[0][0] += tab[0][2];
+		tab[0][1]++;
+	}
+	while (tab[1][0] < tab[0][0])
+	{
+		tab[0][0] += tab[0][2];
+		tab[1][0] += tab[1][2];
+		tab[0][1]++;
+		tab[1][1]++;
+	}
+	return (tab[0][1]);
+}
+
+int		*ft_return_when(t_path ***way, int nb_way)
+{
+	int max[nb_way];
+	int	*tab;
+	int i;
+	int j;
+
+	i = 0;
+	while (i < nb_way)
+		max[i++] = 0;
+	i = 0;
+	if (!(tab = malloc(sizeof(int) * nb_way - 1)))
+		return (NULL);
+	while (way[i])
+	{
+		j = 0;
+		while (way[i][j])
+		{
+			if (way[i][j]->len > max[i])
+				max[i] = way[i][j]->len;
+			j++;
+		}
+		i++;
+	}
+	i = 0;
+	while (way[i + 1])
+	{
+		tab[i] = ft_test(i , max);
+		i++;
+	}
+	return (tab);
+}
+
+int		*ft_create_opti_tab(t_path ***ways)
+{
+	int i;
+
+	i = 0;
+	while (ways[i])
+		i++;
+	return (ft_return_when(ways, i));
+}
+
 int		ft_check_opti_way(int nb_ant, t_path ***ways)
 {
-	(void)ways;
-	if (nb_ant == 1)
-		return (0);
-	return (0);
+	static int	*tab = NULL;
+	int			i;
+
+	i = 0;
+	if (!tab)
+		tab = ft_create_opti_tab(ways);
+	while (ways[i + 1] && nb_ant >= tab[i])
+		i++;
+	return (i);
 }
 
 t_bool   send_ant(t_path ***back, t_data *graph)
@@ -89,20 +162,15 @@ t_bool   send_ant(t_path ***back, t_data *graph)
 
 	walks = NULL;
 	num_ant = 0;
-	int j = 1;
 	while (num_ant < graph->nb_ant)
 	{
 		opti_ways = ft_check_opti_way(graph->nb_ant - num_ant, back);
 		i = 0;
 		while (i <= opti_ways)
 			ft_add_ant(&walks, ++num_ant, back[opti_ways][i++]);
-		printf("%d\n", j++);
 		ft_make_forward(graph, &walks);
 	}
 	while (walks)
-	{
-		printf("%d\n", j++);
 		ft_make_forward(graph, &walks);
-	}
 	return (TRUE);
 }
