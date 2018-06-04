@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_for_testing.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 15:15:51 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/01 15:21:15 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/04 13:17:30 by ccoupez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,11 @@ void	print_values(t_path ***back)
 	int i;
 	int d = 0;
 
+	printf("--------------------------------\n");
 	while (back[d])
 	{
 
-		printf("Indice : %d\n\n\n", d);
+		printf("Indice : %d\n\n", d);
 		j = 0;
 		while (back[d][j])
 		{
@@ -31,8 +32,7 @@ void	print_values(t_path ***back)
 				printf("%d %s", back[d][j]->way[i], i < back[d][j]->len - 1 ? "-" : "");
 				i++;
 			}
-			printf("\nways->len %d\n", back[d][j]->len);
-			printf("\n");
+			printf("\nways->len %d\n\n\n\n", back[d][j]->len);
 			j++;
 		}
 		d++;
