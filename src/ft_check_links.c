@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_links.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/02 18:15:15 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/01 15:47:00 by ccoupez          ###   ########.fr       */
+/*   Updated: 2018/06/03 18:46:38 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,7 @@ int		ft_reach_link(char *link, t_room **rooms, int nbr_rooms, int to_test)
 }
 
 /*
-**	Je sais pu pour le moment
-**	Bah en faite, ca tri cree les liens !!!!
+**	Tri cree les liens
 */
 
 t_bool	ft_parse_link(t_lst *lst, t_room **rooms, int nbr_rooms, int to_test)
@@ -102,7 +101,8 @@ t_bool	ft_verif_links_names(t_room **rooms, int nbr_rooms, char *link)
 	j = 0;
 	while (j < nbr_rooms && ft_strcmp(rooms[j]->name, link + dash + 1))
 		j++;
-	rooms[j]->nb_link++;
+	if (j != nbr_rooms)
+		rooms[j]->nb_link++;
 	return (j == nbr_rooms || i == j ? FALSE : TRUE);
 }
 
@@ -114,6 +114,8 @@ t_bool	ft_corrects_links(t_data *data, t_lst *lst)
 {
 	while (lst)
 	{
+		if (data->option & 1)
+			ft_putendl(lst->str);
 		if (!(ft_verif_links_names(data->rooms, data->nb_rooms, lst->str)))
 			return (FALSE);
 		lst = lst->next;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lst_path.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 15:30:28 by ccoupez           #+#    #+#             */
-/*   Updated: 2018/06/01 15:53:37 by ccoupez          ###   ########.fr       */
+/*   Updated: 2018/06/01 19:56:54 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	ft_lst_path_pushback(t_path **begin, t_path *to_add)
 	}
 }
 
-void	change_place(t_path *a, t_path *b)
+void	ft_change_place(t_path *a, t_path *b)
 {
 	int *swap_way;
 	int swap_len;
