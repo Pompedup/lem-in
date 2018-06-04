@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 16:06:51 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/01 15:48:26 by ccoupez          ###   ########.fr       */
+/*   Updated: 2018/06/03 18:19:27 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ typedef	struct s_lst	t_lst;
 struct				s_lst
 {
 	char			*str;
-	t_bool			entrance;
-	t_bool			wayout;
+	int				type;
 	t_lst			*next;
 };
 
@@ -45,11 +44,12 @@ typedef struct		s_data
 {
 	int				nb_rooms;
 	int				nb_ant;
-	int				nb_entrance;
-	int				nb_wayout;
-	int				*entrance;
-	int				*wayout;
+	int				nb_start;
+	int				nb_end;
+	int				*start;
+	int				*end;
 	t_room			**rooms;
+	int				option;
 }					t_data;
 
 typedef struct		s_path
@@ -98,13 +98,13 @@ void			ft_lst_pushback(t_lst **begin, t_lst *to_add);
 */
 
 t_bool			ft_check_int(int *value, char *str);
-t_bool			ft_parse(char *name, t_data *data);
+t_bool			ft_parse(t_data *data);
 
 /*
 **	resolve.c
 */
 
-int     		resolve(t_data *data);
+int     		ft_resolve(t_data *data);
 int				*ft_intset(int *tab, int c, size_t n);
 
 /*
@@ -113,12 +113,24 @@ int				*ft_intset(int *tab, int c, size_t n);
 
 t_path	*ft_lst_path_new(int *way, int max);
 void	ft_lst_path_pushback(t_path **begin, t_path *to_add);
-void	change_place(t_path *a, t_path *b);
+void	ft_change_place(t_path *a, t_path *b);
 
+/*
+**	ft_search_ways
+*/
+
+void	ft_search_ways(t_data *data, t_path **ways);
+
+/*
+**	ft_search_best_ways.c
+*/
+
+t_bool	ft_search_best_ways(t_path *ways, t_data *data);
 
 /*
 **	testing file
 */
-
+void	ft_print_data(t_data *data);
 void	print_values(t_path ***back);
+void	ft_print_struct(t_data *data);
 #endif
