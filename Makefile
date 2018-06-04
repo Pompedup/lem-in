@@ -6,7 +6,7 @@
 #    By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/25 16:13:40 by abezanni          #+#    #+#              #
-#    Updated: 2018/06/01 19:08:46 by abezanni         ###   ########.fr        #
+#    Updated: 2018/06/04 17:25:53 by abezanni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,6 @@ CC = @gcc
 SRC = $(addprefix src/,$(SRC_NAME))
 
 SRC_NAME =	lem_in.c\
-			choose_path.c\
 			ft_check_links.c\
 			ft_check_rooms.c\
 			ft_free_struct.c\
@@ -33,6 +32,7 @@ SRC_NAME =	lem_in.c\
 			ft_search_best_ways.c\
 			ft_search_ways.c\
 			file_for_testing.c\
+			send_ant.c\
 
 #SRC_NAME1 =
 

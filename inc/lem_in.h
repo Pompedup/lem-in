@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 16:06:51 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/04 16:38:11 by ccoupez          ###   ########.fr       */
+/*   Updated: 2018/06/04 17:42:44 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ typedef struct		s_data
 	int				*start;
 	int				*end;
 	t_room			**rooms;
+	int				nb_ways;
+	int				*by_way;
 	int				option;
 }					t_data;
 
@@ -63,7 +65,9 @@ typedef struct		s_path
 typedef struct		s_walk
 {
 	int				ant;
-	int				i_w[3];
+	t_path			*myway;
+	int				i;
+	struct s_walk	*next;
 }					t_walk;
 
 /*
@@ -137,7 +141,7 @@ void	ft_search_ways(t_data *data, t_path **ways);
 **	ft_search_best_ways.c
 */
 
-t_bool	ft_search_best_ways(t_path *ways, t_data *data);
+t_path	***ft_search_best_ways(t_path *ways, t_data *data);
 
 /*
 **	testing file
@@ -149,5 +153,5 @@ void	ft_print_struct(t_data *data);
 /*
 **	send_ant.c
 */
-void    send_ant(t_path ***back, t_data *graph, int nb_ways);
+t_bool   send_ant(t_path ***back, t_data *graph);
 #endif

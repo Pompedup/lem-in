@@ -3,63 +3,106 @@
 /*                                                        :::      ::::::::   */
 /*   send_ant.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/04 11:39:42 by ccoupez           #+#    #+#             */
-/*   Updated: 2018/06/04 16:22:39 by ccoupez          ###   ########.fr       */
+/*   Updated: 2018/06/04 18:11:03 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-t_bool   send_ant(t_path ***back, t_data *graph, int nb_ways)
+void	ft_remove_walk(t_walk **p_walks, t_walk *walks)
 {
-	int		i;
-	int		j;
-    int		ant;
-	int		ant_send;
-	int		arrived;
-	t_walk	**walks;
+	t_walk *tmp;
 
-
-	if (!(walks = malloc(sizeof(t_walk *) * graph->nb_ant)))
-		return (FALSE);
-	ants_walking = 0;
-	arrived = 0;
-	i = 1;
-	printf("send ant\n");
-	while (arrived != graph->nb_ant)
+	if (*p_walks == walks)
+		*p_walks = walks->next;
+	else
 	{
-		i = 0;
-		if (i < ants_walking)
-		{
-			while (i < ants_walking)
-			{
-				printf("L%d-%d  ", walks[i]->ant, back[walks[i]->i_w[0]][walks[i]->i_w[1]]->way[walks[i]->i_w[2]);
-				
-				if (i < back[walks[i]->i_w[0]][walks[i]->i_w[1]]->len)
-					walks[i]->i_w[2]++;
-				else
-				{
-					//la fourmie est arrivee a la fin
-					ants_walking--;
-				}
-				i++;
-			}
-			//faire avancer les fourmis en cours
-			
-		}
-		//ici il faudra choisir par quelle chemin la fourmie commence
-		walk[i]->ant = i + 1;
-		walks[i]->i_w[0] = 0;
-		walks[i]->i_w[1] = 0;
-		walks[i]->i_w[2] = 0;
-		ants_walking++;
-		//faire avancer de nouvelles fourmies
-	}	
+		tmp = *p_walks;
+		while (tmp->next != walks)
+			tmp = tmp->next;
+		tmp->next = walks->next;
+	}
+	free(walks);
 }
-typedef struct		s_walk
+
+void	ft_make_forward(t_data *data, t_walk **p_walks)
 {
-	int				ant;
-	int				i_w[3];
-}					t_walk;
+	t_walk *walks;
+	t_walk *tmp;
+
+	walks = *p_walks;
+	while (walks)
+	{
+		printf("L%d-%s ", walks->ant, data->rooms[walks->myway->way[walks->i++]]->name);
+		if (walks->i == walks->myway->len)
+		{
+			tmp = walks;
+			walks = walks->next;
+			ft_remove_walk(p_walks, tmp);
+		}
+		else
+			walks = walks->next;
+	}
+	printf("\n");
+}
+
+t_bool	ft_add_ant(t_walk **walk, int nb, t_path *way)
+{
+	t_walk *to_add;
+	t_walk *tmp;
+
+	if (!(to_add = malloc(sizeof(t_walk))))
+		return (FALSE);
+	to_add->ant = nb;
+	to_add->myway = way;
+	to_add->i = 1;
+	to_add->next = NULL;
+	if (!(*walk))
+		*walk = to_add;
+	else
+	{
+		tmp = *walk;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = to_add;
+	}
+	return (TRUE);
+}
+
+int		ft_check_opti_way(int nb_ant, t_path ***ways)
+{
+	(void)ways;
+	if (nb_ant == 1)
+		return (0);
+	return (0);
+}
+
+t_bool   send_ant(t_path ***back, t_data *graph)
+{
+	int		opti_ways;
+	int		i;
+	int		num_ant;
+	t_walk	*walks;
+
+	walks = NULL;
+	num_ant = 0;
+	int j = 1;
+	while (num_ant < graph->nb_ant)
+	{
+		opti_ways = ft_check_opti_way(graph->nb_ant - num_ant, back);
+		i = 0;
+		while (i <= opti_ways)
+			ft_add_ant(&walks, ++num_ant, back[opti_ways][i++]);
+		printf("%d\n", j++);
+		ft_make_forward(graph, &walks);
+	}
+	while (walks)
+	{
+		printf("%d\n", j++);
+		ft_make_forward(graph, &walks);
+	}
+	return (TRUE);
+}

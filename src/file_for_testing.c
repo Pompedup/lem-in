@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_for_testing.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 15:15:51 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/04 16:27:03 by ccoupez          ###   ########.fr       */
+/*   Updated: 2018/06/04 17:00:04 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	print_values(t_path ***back)
 	int i;
 	int d;
 
+	d = 0;
 	printf("--------------------------------\n");
 	while (back[d])
 	{
