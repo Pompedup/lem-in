@@ -6,7 +6,7 @@
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 18:54:06 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/03 17:41:05 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/04 15:56:21 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ t_path	**ft_check_optis_ways(t_path *ways, int nb_max_ways)
 	if (!(back = malloc(sizeof(t_path*) * nb_max_ways + 1)))
 		return (NULL);
 	i = 0;
-	while (i < nb_max_ways)
+	while (i <= nb_max_ways)
 		back[i++] = NULL;
 	len_max = ways->len;
 	tmp = ways;
@@ -141,6 +141,7 @@ t_bool	ft_search_best_ways(t_path *ways, t_data *data)
 	nb_max_ways = ft_count_max_ways(data);
 	if (!(back = malloc(sizeof(t_path **) * nb_max_ways + 1)))
 		return (FALSE);
+	printf("[%d]\n", nb_max_ways);
 	back[nb_max_ways] = NULL;
 	while (nb_max_ways--)
 		back[nb_max_ways] = ft_check_optis_ways(ways, nb_max_ways + 1);

@@ -6,7 +6,7 @@
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 15:13:14 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/03 18:23:28 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/04 15:52:14 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int		main(int ac, char **av)
 	}
 	if (!ft_parse(&data))
 		return (ft_invalide_file());
-	//ft_print_struct(&data);
+//	ft_print_struct(&data);
 	ft_resolve(&data);
 	return (0);
 }
