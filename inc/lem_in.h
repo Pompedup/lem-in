@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 16:06:51 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/03 18:19:27 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/04 16:38:11 by ccoupez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,12 @@ typedef struct		s_path
 	int				chosen;
 	struct s_path	*next;
 }					t_path;
+
+typedef struct		s_walk
+{
+	int				ant;
+	int				i_w[3];
+}					t_walk;
 
 /*
 **  lem-in.c
@@ -116,6 +122,12 @@ void	ft_lst_path_pushback(t_path **begin, t_path *to_add);
 void	ft_change_place(t_path *a, t_path *b);
 
 /*
+**	testing file
+*/
+
+void	print_values(t_path ***back);
+
+/*
 **	ft_search_ways
 */
 
@@ -133,4 +145,9 @@ t_bool	ft_search_best_ways(t_path *ways, t_data *data);
 void	ft_print_data(t_data *data);
 void	print_values(t_path ***back);
 void	ft_print_struct(t_data *data);
+
+/*
+**	send_ant.c
+*/
+void    send_ant(t_path ***back, t_data *graph, int nb_ways);
 #endif
