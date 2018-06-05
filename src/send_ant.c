@@ -6,7 +6,7 @@
 /*   By: adibou <adibou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/04 11:39:42 by ccoupez           #+#    #+#             */
-/*   Updated: 2018/06/05 01:33:45 by adibou           ###   ########.fr       */
+/*   Updated: 2018/06/05 12:26:49 by adibou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,15 +87,28 @@ int		ft_test(int i, int *max)
 		tab[0][0] += tab[0][2];
 		tab[0][1]++;
 	}
-	while (tab[1][0] < tab[0][0])
+	//	ft_putnbrendl(tab[0][0]);
+	/*while (tab[1][0] < tab[0][0])
 	{
+		ft_putendl("");
+		ft_putnbrendl(tab[0][1]);
 		tab[0][0] += tab[0][2];
+		ft_putnbrendl(tab[0][0]);
 		tab[1][0] += tab[1][2];
+		ft_putnbrendl(tab[1][0]);
 		tab[0][1]++;
+		ft_putnbrendl(tab[0][1]);
 		tab[1][1]++;
-	}
-	return (tab[0][1]);
+		ft_putnbrendl(tab[1][1]);
+	}*/
+	return (tab[0][0]);
 }
+/*
+4 / 5 / 6 / 7 / 8 / 9 / 10 / 11 / 12 / 13 / 14 / 15
+
+1 / 2 / 3 / 4 / 5 / 6 /  7 /  8 /  9 / 10 / 11 / 12
+                    2 /  4 /  6 /  8 / 10 /12 /
+*/
 
 int		*ft_return_when(t_path ***way, int nb_way)
 {
@@ -125,6 +138,7 @@ int		*ft_return_when(t_path ***way, int nb_way)
 	while (way[i + 1])
 	{
 		tab[i] = ft_test(i , max);
+		ft_putnbrendl(tab[i]);
 		i++;
 	}
 	return (tab);
@@ -149,7 +163,9 @@ int		ft_check_opti_way(int nb_ant, t_path ***ways)
 	if (!tab)
 		tab = ft_create_opti_tab(ways);
 	while (ways[i + 1] && nb_ant >= tab[i])
+	{
 		i++;
+	}	
 	return (i);
 }
 
