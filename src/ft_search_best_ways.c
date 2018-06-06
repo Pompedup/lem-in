@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_search_best_ways.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 18:54:06 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/05 14:43:47 by ccoupez          ###   ########.fr       */
+/*   Updated: 2018/06/06 14:17:28 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ t_bool	ft_cmp_ways(t_path **ways, t_path *tocmp, int size)
 **	longueur maximum de len_max salles
 */
 
-t_bool	ft_search_only_ways(t_path **tab_w, t_path *ways, int len_max, int nb_ways)
+t_bool	search_only_way(t_path **tab_w, t_path *ways, int len_max, int nb_ways)
 {
 	t_path	*send;
 	int		i;
@@ -83,7 +83,7 @@ t_bool	ft_search_only_ways(t_path **tab_w, t_path *ways, int len_max, int nb_way
 			send = ways->next;
 			while (send && send->len <= len_max)
 			{
-				if (ft_search_only_ways(tab_w, send, len_max, nb_ways))
+				if (search_only_way(tab_w, send, len_max, nb_ways))
 					return (TRUE);
 				send = send->next;
 			}
@@ -114,7 +114,7 @@ t_path	**ft_check_optis_ways(t_path *ways, int nb_max_ways)
 		back[i++] = NULL;
 	len_max = ways->len;
 	tmp = ways;
-	while (!(ft_search_only_ways(back, ways, len_max, nb_max_ways)))
+	while (!(search_only_way(back, ways, len_max, nb_max_ways)))
 	{
 		while (tmp && tmp->len == len_max)
 			tmp = tmp->next;
@@ -141,10 +141,8 @@ t_path	***ft_search_best_ways(t_path *ways, t_data *data)
 	nb_max_ways = ft_count_max_ways(data);
 	if (!(back = malloc(sizeof(t_path **) * nb_max_ways + 1)))
 		return (NULL);
-	printf("nb_max_ways [%d]\n", nb_max_ways);
 	back[nb_max_ways] = NULL;
 	while (nb_max_ways--)
 		back[nb_max_ways] = ft_check_optis_ways(ways, nb_max_ways + 1);
-	print_values(back);
 	return (back);
 }

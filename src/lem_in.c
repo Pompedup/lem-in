@@ -3,36 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 15:13:14 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/04 18:46:36 by ccoupez          ###   ########.fr       */
+/*   Updated: 2018/06/06 14:20:11 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void	ft_print_structe(t_data *data)
+void	ft_init_struct(t_data *data)
 {
-	int		i;
-	t_room	*room;
-
-	i = 0;
-	if (data)
-	{
-		if (data->rooms)
-		{
-			while (i < data->nb_rooms)
-			{
-				room = data->rooms[i];
-				ft_putendl(room->name);
-				ft_putnbrendl(room->num_room);
-				ft_putnbrendl(room->pos[0]);
-				ft_putnbrendl(room->pos[1]);
-				i++;
-			}
-		}
-	}
+	data->nb_rooms = 0;
+	data->nb_start = 0;
+	data->nb_end = 0;
+	data->start = NULL;
+	data->end = NULL;
+	data->rooms = NULL;
 }
 
 /*
@@ -58,9 +45,9 @@ int		main(int ac, char **av)
 		(void)av;
 		data.option = 1;
 	}
+	ft_init_struct(&data);
 	if (!ft_parse(&data))
 		return (ft_invalide_file());
-	//ft_print_struct(&data);
 	ft_resolve(&data);
 	return (0);
 }

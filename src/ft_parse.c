@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 18:34:16 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/05 14:42:20 by ccoupez          ###   ########.fr       */
+/*   Updated: 2018/06/06 14:42:34 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,29 +53,10 @@ t_bool	ft_check_int(int *value, char *str)
 }
 
 /*
-**	Passes les lignes non importantes
-*/
-
-t_bool	ft_go_to_the_room(int fd, char **line, t_lst *lst)
-{
-	*(*line + 1) = 0;
-	while (**line == '#' && ft_strcmp("##end", *line)
-		&& ft_strcmp("##start", *line))
-	{
-		free(*line);
-		if (!get_next_line(fd, line))
-			return (ft_destroy(lst));
-	}
-	if (ft_nbr_words_charset(*line, " \t") != 3)
-		return (ft_destroy(lst));
-	return (TRUE);
-}
-
-/*
 **	Verifie de quelle commande il s'agit et l'ajoute
 */
 
-void	ft_check_cmd(t_data *data, t_lst **lst, char * line)
+void	ft_check_cmd(t_data *data, t_lst **lst, char *line)
 {
 	int type;
 
@@ -115,20 +96,6 @@ t_lst	*ft_get_lines(t_lst *lst, t_data *data)
 	return (lst);
 }
 
-void	ft_print_free_lst(t_lst *lst, t_bool print)
-{
-	t_lst *tmp;
-	while (lst)
-	{
-		if (print)
-			ft_putendl(lst->str);
-		tmp = lst->next;
-		free(lst->str);
-		free(lst);
-		lst = tmp;
-	}
-}
-
 /*
 **  Lis le fichier envoyé en paramètre, le test et retourne les
 **  données s'il est valide
@@ -140,12 +107,6 @@ t_bool	ft_parse(t_data *data)
 	t_lst	*save_first;
 
 	lst = NULL;
-	data->nb_rooms = 0;
-	data->nb_start = 0;
-	data->nb_end = 0;
-	data->start = NULL;
-	data->end = NULL;
-	data->rooms = NULL;
 	if (!(lst = ft_get_lines(lst, data)))
 		return (FALSE);
 	save_first = lst;
