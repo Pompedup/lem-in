@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_links.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/02 18:15:15 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/06 14:21:31 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/06 18:04:37 by ccoupez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ char	*ft_islinked(char *link, char *name, int len_name)
 	{
 		if (answer == link && answer[len_name] == '-')
 			return (answer);
-		else if (answer[-1] == '-' && answer[len_name] == '\0')
+		else if (answer != link && answer[-1] == '-' &&
+		answer[len_name] == '\0')
 			return (answer);
 	}
 	return (NULL);
