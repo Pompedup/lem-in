@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   send_ant.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adibou <adibou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/04 11:39:42 by ccoupez           #+#    #+#             */
-/*   Updated: 2018/06/05 12:26:49 by adibou           ###   ########.fr       */
+/*   Updated: 2018/06/05 17:08:46 by ccoupez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,42 +72,29 @@ t_bool	ft_add_ant(t_walk **walk, int nb, t_path *way)
 	return (TRUE);
 }
 
-int		ft_test(int i, int *max)
+int		ft_test(int i, int *max, int prev)
 {
-	int tab[2][3];
+	int nb_pass;
+	int by_turn;
 
-	tab[0][0] = i + 1;
-	tab[0][1] = max[i];
-	tab[0][2] = i + 1;
-	tab[1][0] = i+ 2;
-	tab[1][1] = max[i + 1];
-	tab[1][2] = i + 2;
-	while (tab[0][1] < tab[1][1])
+	by_turn = i + 1;
+	nb_pass = prev + by_turn;
+	while (max[i] < max[i + 1])
 	{
-		tab[0][0] += tab[0][2];
-		tab[0][1]++;
+		nb_pass += by_turn;
+		max[i]++;
 	}
-	//	ft_putnbrendl(tab[0][0]);
-	/*while (tab[1][0] < tab[0][0])
-	{
-		ft_putendl("");
-		ft_putnbrendl(tab[0][1]);
-		tab[0][0] += tab[0][2];
-		ft_putnbrendl(tab[0][0]);
-		tab[1][0] += tab[1][2];
-		ft_putnbrendl(tab[1][0]);
-		tab[0][1]++;
-		ft_putnbrendl(tab[0][1]);
-		tab[1][1]++;
-		ft_putnbrendl(tab[1][1]);
-	}*/
-	return (tab[0][0]);
+	return (nb_pass);
 }
 /*
-4 / 5 / 6 / 7 / 8 / 9 / 10 / 11 / 12 / 13 / 14 / 15
+ 1 /  2 /  3 /  4 /  5 /  6 /  7 /  8 /  9 / 10 / 11 / 12 / 13 / 14 / 15
 
-1 / 2 / 3 / 4 / 5 / 6 /  7 /  8 /  9 / 10 / 11 / 12
-                    2 /  4 /  6 /  8 / 10 /12 /
+ 2 /  2 /  2 /  1 /  1 /  1 /  1
+
+		        1 /  2 /  3 /  4 /  5 /  6 /  7 /  8 /  9 / 10 / 11 / 12 -  6     7
+                                         2 /  4 /  6 /  8 / 10 / 12 /    -  11   12
+								                   3 /  6 /  9 / 12      -  15   16
+										                4 /  8 / 12   
 */
 
 int		*ft_return_when(t_path ***way, int nb_way)
@@ -137,7 +124,8 @@ int		*ft_return_when(t_path ***way, int nb_way)
 	i = 0;
 	while (way[i + 1])
 	{
-		tab[i] = ft_test(i , max);
+		//printf("-----------return_when\n");
+		tab[i] = ft_test(i, max, i == 0 ? 1 : tab[i - 1] - i);
 		ft_putnbrendl(tab[i]);
 		i++;
 	}
@@ -149,8 +137,9 @@ int		*ft_create_opti_tab(t_path ***ways)
 	int i;
 
 	i = 0;
-	while (ways[i])
+	while (ways[i]) // on va la ou il y a le plus de chemin
 		i++;
+	//printf("i creat opti tab %d\n", i);
 	return (ft_return_when(ways, i));
 }
 
@@ -162,8 +151,12 @@ int		ft_check_opti_way(int nb_ant, t_path ***ways)
 	i = 0;
 	if (!tab)
 		tab = ft_create_opti_tab(ways);
+	//printf("1ds check opti way tab[i] %d\n", tab[i]);
+	//printf("1ds check opti way nb_ant %d\n", nb_ant);
 	while (ways[i + 1] && nb_ant >= tab[i])
 	{
+		//printf("ds check opti way tab[i] %d\n", tab[i]);
+		//printf("ds check opti way nb_ant %d\n", nb_ant);
 		i++;
 	}	
 	return (i);
@@ -178,15 +171,21 @@ t_bool   send_ant(t_path ***back, t_data *graph)
 
 	walks = NULL;
 	num_ant = 0;
+	int j = 1;
 	while (num_ant < graph->nb_ant)
 	{
 		opti_ways = ft_check_opti_way(graph->nb_ant - num_ant, back);
+		printf("opti_ways %d\n", opti_ways);
 		i = 0;
 		while (i <= opti_ways)
 			ft_add_ant(&walks, ++num_ant, back[opti_ways][i++]);
+		printf("%d\n", j++);
 		ft_make_forward(graph, &walks);
 	}
 	while (walks)
+	{
+		printf("%d\n", j++);
 		ft_make_forward(graph, &walks);
+	}
 	return (TRUE);
 }

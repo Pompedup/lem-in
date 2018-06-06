@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 15:13:14 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/04 17:34:03 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/04 18:46:36 by ccoupez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int		main(int ac, char **av)
 	}
 	if (!ft_parse(&data))
 		return (ft_invalide_file());
-//	ft_print_struct(&data);
+	//ft_print_struct(&data);
 	ft_resolve(&data);
 	return (0);
 }
