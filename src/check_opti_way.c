@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_opti_way.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/06 14:39:34 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/06 14:39:43 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/06 18:09:42 by ccoupez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int		*ft_create_opti_tab(t_path ***ways)
 	nb_way = 0;
 	while (ways[nb_way])
 		nb_way++;
-	if (!(tab = malloc(sizeof(int) * nb_way - 1)))
+	if (!(tab = malloc(sizeof(int) * (nb_way - 1))))
 		return (NULL);
 	ft_return_when(ways, nb_way, tab);
 	return (tab);

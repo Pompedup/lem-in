@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_struct.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 18:44:33 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/06 14:42:39 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/06 18:09:56 by ccoupez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,22 @@ void	ft_free_t_data(t_data *data)
 		free(data->start);
 	if (data->end)
 		free(data->end);
+}
+
+void	ft_free_t_path(t_path ***best_path, t_path *paths)
+{
+	int		i;
+	t_path	*tmp;
+
+	i = 0;
+	while (best_path[i])
+		free(best_path[i++]);
+	free(best_path);
+	while (paths)
+	{
+		tmp = paths->next;
+		free(paths->way);
+		free(paths);
+		paths = tmp;
+	}
 }

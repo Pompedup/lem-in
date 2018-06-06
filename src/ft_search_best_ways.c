@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_search_best_ways.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 18:54:06 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/06 14:17:28 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/06 17:55:38 by ccoupez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,28 +104,28 @@ t_path	**ft_check_optis_ways(t_path *ways, int nb_max_ways)
 {
 	int		i;
 	int		len_max;
-	t_path	**back;
+	t_path	**tab_w;
 	t_path	*tmp;
 
-	if (!(back = malloc(sizeof(t_path*) * nb_max_ways + 1)))
+	if (!(tab_w = malloc(sizeof(t_path*) * (nb_max_ways + 1))))
 		return (NULL);
 	i = 0;
 	while (i <= nb_max_ways)
-		back[i++] = NULL;
+		tab_w[i++] = NULL;
 	len_max = ways->len;
 	tmp = ways;
-	while (!(search_only_way(back, ways, len_max, nb_max_ways)))
+	while (!(search_only_way(tab_w, ways, len_max, nb_max_ways)))
 	{
 		while (tmp && tmp->len == len_max)
 			tmp = tmp->next;
 		if (!tmp)
 		{
-			free(back);
+			free(tab_w);
 			return (NULL);
 		}
 		len_max = tmp->len;
 	}
-	return (back);
+	return (tab_w);
 }
 
 /*
@@ -139,7 +139,7 @@ t_path	***ft_search_best_ways(t_path *ways, t_data *data)
 	t_path	***back;
 
 	nb_max_ways = ft_count_max_ways(data);
-	if (!(back = malloc(sizeof(t_path **) * nb_max_ways + 1)))
+	if (!(back = malloc(sizeof(t_path **) * (nb_max_ways + 1))))
 		return (NULL);
 	back[nb_max_ways] = NULL;
 	while (nb_max_ways--)

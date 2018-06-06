@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 15:13:14 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/06 14:20:11 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/06 18:10:09 by ccoupez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int		main(int ac, char **av)
 {
 	t_data data;
 
+	data.option = 0;
 	if (ac > 1)
 	{
 		(void)av;

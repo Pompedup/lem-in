@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 16:06:51 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/06 14:45:38 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/06 17:28:40 by ccoupez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ typedef struct		s_path
 {
 	int				*way;
 	int				len;
-	int				chosen;
 	struct s_path	*next;
 }					t_path;
 
@@ -99,6 +98,7 @@ t_bool				ft_check_rooms(t_data *data, t_lst **lst);
 void				ft_print_free_lst(t_lst *lst, t_bool print);
 void				ft_free_tab(char **tab, int i);
 void				ft_free_t_data(t_data *data);
+void				ft_free_t_path(t_path ***best_path, t_path *paths);
 
 /*
 **	ft_lst.c

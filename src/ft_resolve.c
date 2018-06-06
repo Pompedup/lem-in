@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_resolve.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/23 16:17:36 by ccoupez           #+#    #+#             */
-/*   Updated: 2018/06/06 14:11:54 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/06 17:29:42 by ccoupez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,7 @@ int		ft_resolve(t_data *data)
 	ft_search_ways(data, &ways);
 	best_ways = ft_search_best_ways(ways, data);
 	send_ant(best_ways, data);
+	ft_free_t_path(best_ways, ways);
+	ft_free_t_data(data);
 	return (0);
 }
