@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 16:06:51 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/06 17:28:40 by ccoupez          ###   ########.fr       */
+/*   Updated: 2018/06/06 19:25:00 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void				ft_free_t_path(t_path ***best_path, t_path *paths);
 **	ft_lst.c
 */
 
-t_bool				ft_destroy(t_lst *lst);
+t_bool				ft_destroy(t_data *data, t_lst *lst);
 void				ft_free_item(t_lst **lst);
 t_lst				*ft_lst_new(char *str, int passage);
 void				ft_lst_pushback(t_lst **begin, t_lst *to_add);
@@ -114,13 +114,13 @@ void				ft_lst_pushback(t_lst **begin, t_lst *to_add);
 */
 
 t_bool				ft_check_int(int *value, char *str);
-t_bool				ft_parse(t_data *data);
+t_bool				ft_parse(t_data *data, t_lst **lst);
 
 /*
 **	resolve.c
 */
 
-int					ft_resolve(t_data *data);
+t_bool				ft_resolve(t_data *data, t_lst *lst);
 int					*ft_intset(int *tab, int c, size_t n);
 
 /*

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_resolve.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/23 16:17:36 by ccoupez           #+#    #+#             */
-/*   Updated: 2018/06/06 17:29:42 by ccoupez          ###   ########.fr       */
+/*   Updated: 2018/06/06 19:24:49 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 **	puis les chemins les plus optimises
 */
 
-int		ft_resolve(t_data *data)
+t_bool	ft_resolve(t_data *data, t_lst *lst)
 {
 	t_path	*ways;
 	t_path	***best_ways;
@@ -26,9 +26,13 @@ int		ft_resolve(t_data *data)
 	i = 0;
 	ways = NULL;
 	ft_search_ways(data, &ways);
+	if (!ways)
+		return (ft_destroy(data, lst));
+	else
+		ft_print_free_lst(lst, !(data->option & 1));
 	best_ways = ft_search_best_ways(ways, data);
 	send_ant(best_ways, data);
 	ft_free_t_path(best_ways, ways);
 	ft_free_t_data(data);
-	return (0);
+	return (TRUE);
 }

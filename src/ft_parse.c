@@ -6,7 +6,7 @@
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 18:34:16 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/06 14:42:34 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/06 19:22:05 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,26 +101,24 @@ t_lst	*ft_get_lines(t_lst *lst, t_data *data)
 **  données s'il est valide
 */
 
-t_bool	ft_parse(t_data *data)
+t_bool	ft_parse(t_data *data, t_lst **lst)
 {
-	t_lst	*lst;
 	t_lst	*save_first;
 
-	lst = NULL;
-	if (!(lst = ft_get_lines(lst, data)))
+	if (!(*lst = ft_get_lines(*lst, data)))
 		return (FALSE);
-	save_first = lst;
-	if (!data->nb_start || !data->nb_end || !lst)
-		return (ft_destroy(save_first));
+	save_first = *lst;
+	if (!data->nb_start || !data->nb_end || !*lst)
+		return (ft_destroy(data, save_first));
 	if (data->option & 1)
-		ft_putendl(lst->str);
-	if (!ft_check_int(&(data->nb_ant), lst->str))
-		return (ft_destroy(save_first));
-	lst = lst->next;
-	if (!(ft_check_rooms(data, &lst)))
-		return (ft_destroy(save_first));
-	if (!(ft_check_links(data, lst)))
-		return (ft_destroy(save_first));
-	ft_print_free_lst(save_first, !(data->option & 1));
+		ft_putendl((*lst)->str);
+	if (!ft_check_int(&(data->nb_ant), (*lst)->str))
+		return (ft_destroy(data, save_first));
+	(*lst) = (*lst)->next;
+	if (!(ft_check_rooms(data, lst)))
+		return (ft_destroy(data, save_first));
+	if (!(ft_check_links(data, *lst)))
+		return (ft_destroy(data, save_first));
+	*lst = save_first;
 	return (TRUE);
 }

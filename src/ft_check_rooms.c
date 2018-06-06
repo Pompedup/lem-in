@@ -6,7 +6,7 @@
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/30 12:33:23 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/06 14:43:26 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/06 19:13:41 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ int		ft_count_rooms(t_lst *lst)
 	int		nbr_rooms;
 
 	nbr_rooms = 0;
-	while (ft_nbr_words_charset(lst->str, " \t") == 3 || *lst->str == '#')
+	while (lst && (
+		ft_nbr_words_charset(lst->str, " \t") == 3 || *lst->str == '#'))
 	{
 		if (*lst->str != '#')
 			nbr_rooms++;
@@ -134,7 +135,7 @@ t_bool	ft_check_rooms(t_data *data, t_lst **lst)
 		}
 		*lst = (*lst)->next;
 	}
-	if (!ft_verif_no_double(data->rooms, data->nb_rooms))
+	if (!lst || !ft_verif_no_double(data->rooms, data->nb_rooms))
 		return (FALSE);
 	return (TRUE);
 }

@@ -6,7 +6,7 @@
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 15:13:14 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/06 18:17:10 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/06 19:25:25 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,13 +89,16 @@ int		ft_invalide_file(void)
 
 int		main(int ac, char **av)
 {
-	t_data data;
+	t_data	data;
+	t_lst	*lst;
 
 	ft_init_struct(&data);
+	lst = NULL;
 	if (ac > 1)
 		ft_check_option(&data, ac, av);
-	if (!ft_parse(&data))
+	if (!ft_parse(&data, &lst))
 		return (ft_invalide_file());
-	ft_resolve(&data);
+	if (!ft_resolve(&data, lst))
+		return (ft_invalide_file());
 	return (0);
 }

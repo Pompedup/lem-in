@@ -6,7 +6,7 @@
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 17:37:13 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/03 17:40:05 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/06 19:25:05 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@
 **  Détruis les listes
 */
 
-t_bool	ft_destroy(t_lst *lst)
+t_bool	ft_destroy(t_data *data, t_lst *lst)
 {
 	t_lst *tmp;
 
+	ft_free_t_data(data);
 	while (lst)
 	{
 		tmp = lst->next;
