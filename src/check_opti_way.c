@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_opti_way.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: adibou <adibou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/06 14:39:34 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/06 18:09:42 by ccoupez          ###   ########.fr       */
+/*   Updated: 2018/06/22 01:14:51 by adibou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,11 @@ int		ft_calcul(int i, int *max, int prev)
 	return (nb_pass);
 }
 
-/*
-**	Retourne le tableau avec les valeurs de changement de salles
-*/
-
-void	ft_return_when(t_path ***way, int nb_way, int *tab)
+void	norme(t_path ***way, int *max)
 {
-	int max[nb_way];
 	int i;
 	int j;
 
-	i = 0;
-	while (i < nb_way)
-		max[i++] = 0;
 	i = 0;
 	while (way[i])
 	{
@@ -57,12 +49,30 @@ void	ft_return_when(t_path ***way, int nb_way, int *tab)
 		}
 		i++;
 	}
+}
+
+/*
+**	Retourne le tableau avec les valeurs de changement de salles
+*/
+
+void	ft_return_when(t_path ***way, int nb_way, int *tab)
+{
+	int *max;
+	int i;
+
+	i = 0;
+	if (!(max = malloc(sizeof(int) * nb_way)))
+		return ;
+	while (i < nb_way)
+		max[i++] = 0;
+	norme(way, max);
 	i = 0;
 	while (way[i + 1])
 	{
 		tab[i] = ft_calcul(i, max, i == 0 ? 1 : tab[i - 1] - i);
 		i++;
 	}
+	free(max);
 }
 
 int		*ft_create_opti_tab(t_path ***ways)
