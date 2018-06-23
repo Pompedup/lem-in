@@ -6,7 +6,7 @@
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 18:34:16 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/06 19:22:05 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/23 13:26:01 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ t_bool	ft_check_int(int *value, char *str)
 		return (FALSE);
 	if (len > 9 && ft_strcmp(*str == '+' ? str + 1 : str, "2147483647") > 0)
 		return (FALSE);
-	if ((*str == '+' && !*(str + 1)) ||
-		!ft_strisall(*str == '+' ? str + 1 : str, ISDIGIT))
+	if ((*str == '+' && !*(str + 1))
+		|| !ft_strisall(*str == '+' ? str + 1 : str, ISDIGIT))
 		return (FALSE);
 	*value = ft_atoi(str);
 	return (TRUE);

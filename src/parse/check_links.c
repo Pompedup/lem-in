@@ -6,7 +6,7 @@
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/02 18:15:15 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/06 19:14:23 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/23 13:25:11 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ char	*ft_islinked(char *link, char *name, int len_name)
 	{
 		if (answer == link && answer[len_name] == '-')
 			return (answer);
-		else if (answer != link && answer[-1] == '-' &&
-		answer[len_name] == '\0')
+		else if (answer != link && answer[-1] == '-'
+			&& answer[len_name] == '\0')
 			return (answer);
 	}
 	return (NULL);
@@ -129,8 +129,8 @@ t_bool	ft_check_links(t_data *data, t_lst *lst)
 	{
 		if (!ft_parse_link(lst, data->rooms, data->nb_rooms, i))
 			return (FALSE);
-		if (data->rooms[i]->nb_link > 1 &&
-		!ft_sort_table(data->rooms[i]->links, data->rooms[i]->nb_link))
+		if (data->rooms[i]->nb_link > 1
+			&& !ft_sort_table(data->rooms[i]->links, data->rooms[i]->nb_link))
 			return (FALSE);
 		i++;
 	}

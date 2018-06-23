@@ -6,7 +6,7 @@
 /*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/30 12:33:23 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/06 19:13:41 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/23 13:24:32 by abezanni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ t_bool	ft_create_room(char *str, int i_r, t_room **room)
 		ft_free_tab(words, 0);
 		return (FALSE);
 	}
-	if (!(ft_check_int(&(room[i_r]->pos[0]), words[1]) &&
-		ft_check_int(&(room[i_r]->pos[1]), words[2])))
+	if (!(ft_check_int(&(room[i_r]->pos[0]), words[1])
+		&& ft_check_int(&(room[i_r]->pos[1]), words[2])))
 	{
 		ft_free_tab(words, 0);
 		return (FALSE);
