@@ -6,7 +6,7 @@
 /*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/30 12:33:23 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/24 16:03:58 by ccoupez          ###   ########.fr       */
+/*   Updated: 2018/06/24 17:39:53 by ccoupez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int		ft_count_rooms(t_lst *lst, int option)
 {
 	int		nbr_rooms;
 	t_lst	*save;
-	
+
 	nbr_rooms = 0;
 	save = lst;
 	while (lst && (*lst->str == '#'

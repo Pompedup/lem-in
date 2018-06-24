@@ -6,7 +6,7 @@
 /*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 18:47:38 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/24 16:29:37 by ccoupez          ###   ########.fr       */
+/*   Updated: 2018/06/24 18:03:45 by ccoupez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int		not_on_the_way(int *way, int actual, int max)
 	int i;
 
 	i = 0;
-	while (way[i] != -1 && i < max)
+	while (i < max && way[i] != -1)
 	{
 		if (way[i] == actual)
 			return (0);

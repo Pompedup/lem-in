@@ -6,7 +6,7 @@
 /*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/02 18:15:15 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/24 15:32:49 by ccoupez          ###   ########.fr       */
+/*   Updated: 2018/06/24 17:39:32 by ccoupez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_islinked(char *link, char *name, int len_name)
 {
 	char	*answer;
 
-	if ((answer = ft_strstr(link, name)))
+	if ((answer = ft_strstrtochar(link, name, '-')))
 	{
 		if (answer == link && answer[len_name] == '-')
 			return (answer);

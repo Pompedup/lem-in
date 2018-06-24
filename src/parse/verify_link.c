@@ -6,7 +6,7 @@
 /*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/06 14:21:05 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/24 15:10:56 by ccoupez          ###   ########.fr       */
+/*   Updated: 2018/06/24 17:35:05 by ccoupez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_bool	ft_verif_links_names(t_room **rooms, int nbr_rooms, char *link)
 
 	i = 0;
 	while (i < nbr_rooms && !(dash =
-		ft_strstrtochar(link, rooms[i]->name, '-')))
+		ft_isstrstrtochar(link, rooms[i]->name, '-')))
 		i++;
 	if (!dash)
 		return (FALSE);
