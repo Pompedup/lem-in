@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lst_path.c                                      :+:      :+:    :+:   */
+/*   lst_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/28 15:30:28 by ccoupez           #+#    #+#             */
-/*   Updated: 2018/06/01 19:56:54 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/24 16:30:13 by ccoupez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_path	*ft_lst_path_new(int *way, int max)
 	int		len;
 
 	len = 0;
-	while (way[len] != -1 && len < max)
+	while (len < max && way[len] != -1)
 		len++;
 	if (!(path = malloc(sizeof(t_path))))
 		return (NULL);

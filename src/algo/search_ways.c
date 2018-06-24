@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_search_ways.c                                   :+:      :+:    :+:   */
+/*   search_ways.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/01 18:47:38 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/03 17:41:34 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/24 16:29:37 by ccoupez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,16 @@ void	deep_course(t_data *graph, t_path **path, t_room *room, int *visited)
 void	ft_search_ways(t_data *data, t_path **ways)
 {
 	int i;
-	int	tab[data->nb_rooms];
+	int	*tab;
 
 	i = 0;
+	if (!(tab = malloc(sizeof(int) * data->nb_rooms)))
+		return ;
 	while (i < data->nb_rooms)
 		tab[i++] = -1;
 	i = 0;
 	while (i < data->nb_start)
 		deep_course(data, ways, data->rooms[data->start[i++]], tab);
 	sort_ways(*ways);
+	free(tab);
 }

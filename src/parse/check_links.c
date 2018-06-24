@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_check_links.c                                   :+:      :+:    :+:   */
+/*   check_links.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/02 18:15:15 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/23 13:25:11 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/24 15:32:49 by ccoupez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ t_bool	ft_parse_link(t_lst *lst, t_room **rooms, int nbr_rooms, int to_test)
 		return (FALSE);
 	while (lst && i_tab < rooms[to_test]->nb_link)
 	{
-		if ((pos = ft_islinked(lst->str, rooms[to_test]->name, len)))
+		if ((pos = ft_islinked(lst->str, rooms[to_test]->name, len))
+			&& *(lst->str) != '#')
 		{
 			rooms[to_test]->links[i_tab] =
 			ft_reach_link(lst->str, rooms, nbr_rooms, to_test);
@@ -129,8 +130,8 @@ t_bool	ft_check_links(t_data *data, t_lst *lst)
 	{
 		if (!ft_parse_link(lst, data->rooms, data->nb_rooms, i))
 			return (FALSE);
-		if (data->rooms[i]->nb_link > 1
-			&& !ft_sort_table(data->rooms[i]->links, data->rooms[i]->nb_link))
+		if (!ft_sort_table(data->rooms[i]->links, data->rooms[i]->nb_link)
+			&& data->rooms[i]->nb_link > 1)
 			return (FALSE);
 		i++;
 	}

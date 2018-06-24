@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_parse.c                                         :+:      :+:    :+:   */
+/*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 18:34:16 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/23 13:26:01 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/24 16:33:38 by ccoupez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,11 @@ t_bool	ft_check_int(int *value, char *str)
 **	Verifie de quelle commande il s'agit et l'ajoute
 */
 
-void	ft_check_cmd(t_data *data, t_lst **lst, char *line)
+t_bool	ft_check_cmd(t_data *data, t_lst **lst, char *line)
 {
 	int type;
 
 	type = -2;
-	ft_lst_pushback(lst, ft_lst_new(line, -1));
 	if (!ft_strcmp("##start", line))
 	{
 		type = 1;
@@ -72,8 +71,18 @@ void	ft_check_cmd(t_data *data, t_lst **lst, char *line)
 		type = 2;
 		data->nb_end++;
 	}
+	else
+		return (FALSE);
+	ft_lst_pushback(lst, ft_lst_new(line, -type));
 	get_next_line(0, &line);
-	ft_lst_pushback(lst, ft_lst_new(line, type));
+	while (line && *line == '#')
+	{
+		ft_lst_pushback(lst, ft_lst_new(line, -3));
+		get_next_line(0, &line);
+	}
+	if (line)
+		ft_lst_pushback(lst, ft_lst_new(line, type));
+	return (TRUE);
 }
 
 /*
@@ -82,16 +91,29 @@ void	ft_check_cmd(t_data *data, t_lst **lst, char *line)
 
 t_lst	*ft_get_lines(t_lst *lst, t_data *data)
 {
-	char *line;
+	char	*line;
+	t_lst	*tmp;
 
-	while (get_next_line(0, &line))
+	while (get_next_line(0, &line) > 0)
 	{
 		if (ft_strnstr(line, "##", 2))
-			ft_check_cmd(data, &lst, line);
+		{
+			if (!ft_check_cmd(data, &lst, line))
+				ft_lst_pushback(&lst, ft_lst_new(line, -3));
+		}
 		else if (*line == '#')
-			ft_lst_pushback(&lst, ft_lst_new(line, -1));
+			ft_lst_pushback(&lst, ft_lst_new(line, -3));
 		else
 			ft_lst_pushback(&lst, ft_lst_new(line, 0));
+	}
+	if ((!data->nb_start || !data->nb_end) && data->option & 1)
+	{
+		tmp = lst;
+		while (tmp)
+		{
+			ft_putendl(tmp->str);
+			tmp = tmp->next;
+		}
 	}
 	return (lst);
 }
@@ -103,22 +125,29 @@ t_lst	*ft_get_lines(t_lst *lst, t_data *data)
 
 t_bool	ft_parse(t_data *data, t_lst **lst)
 {
-	t_lst	*save_first;
+	t_lst	*tmp;
 
 	if (!(*lst = ft_get_lines(*lst, data)))
 		return (FALSE);
-	save_first = *lst;
-	if (!data->nb_start || !data->nb_end || !*lst)
-		return (ft_destroy(data, save_first));
+	tmp = *lst;
+	if (!data->nb_start || !data->nb_end || !tmp)
+		return (ft_destroy(data, *lst));
+	while (*(tmp->str) == '#')
+	{
+		if (data->option & 1)
+			ft_putendl(tmp->str);
+		if ((tmp->str)[1] == '#')
+			return (ft_destroy(data, *lst));
+		tmp = tmp->next;
+	}
 	if (data->option & 1)
-		ft_putendl((*lst)->str);
-	if (!ft_check_int(&(data->nb_ant), (*lst)->str))
-		return (ft_destroy(data, save_first));
-	(*lst) = (*lst)->next;
-	if (!(ft_check_rooms(data, lst)))
-		return (ft_destroy(data, save_first));
-	if (!(ft_check_links(data, *lst)))
-		return (ft_destroy(data, save_first));
-	*lst = save_first;
+		ft_putendl(tmp->str);
+	if (!ft_check_int(&(data->nb_ant), tmp->str))
+		return (ft_destroy(data, *lst));
+	tmp = tmp->next;
+	if (!(ft_check_rooms(data, &tmp)))
+		return (ft_destroy(data, *lst));
+	if (!(ft_check_links(data, tmp)))
+		return (ft_destroy(data, *lst));
 	return (TRUE);
 }

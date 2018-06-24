@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/25 16:06:51 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/06 19:25:00 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/24 15:33:28 by ccoupez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,25 +74,37 @@ typedef struct		s_walk
 int					ft_check_opti_way(int nb_ant, t_path ***ways);
 
 /*
-**	ft_check_double_rooms.c
+**	cmd.c
+*/
+
+t_bool				cmd_valide(t_data *data, t_lst *lst, int i);
+
+/*
+**	check_double_rooms.c
 */
 
 t_bool				ft_verif_no_double(t_room **rooms, int nbr_rooms);
 
 /*
-**	ft_check_links.c
+**	check_links.c
 */
 
 t_bool				ft_check_links(t_data *data, t_lst *lst);
 
 /*
-**	ft_check_rooms.c
+**	check_option.c
+*/
+
+void				ft_check_option(t_data *data, int ac, char **av);
+
+/*
+**	check_rooms.c
 */
 
 t_bool				ft_check_rooms(t_data *data, t_lst **lst);
 
 /*
-**	ft_free_struct.c
+**	free_struct.c
 */
 
 void				ft_print_free_lst(t_lst *lst, t_bool print);
@@ -101,7 +113,7 @@ void				ft_free_t_data(t_data *data);
 void				ft_free_t_path(t_path ***best_path, t_path *paths);
 
 /*
-**	ft_lst.c
+**	lst.c
 */
 
 t_bool				ft_destroy(t_data *data, t_lst *lst);
@@ -110,7 +122,7 @@ t_lst				*ft_lst_new(char *str, int passage);
 void				ft_lst_pushback(t_lst **begin, t_lst *to_add);
 
 /*
-**	ft_parse.c
+**	parse.c
 */
 
 t_bool				ft_check_int(int *value, char *str);
@@ -124,7 +136,7 @@ t_bool				ft_resolve(t_data *data, t_lst *lst);
 int					*ft_intset(int *tab, int c, size_t n);
 
 /*
-**	ft_lst_path.c
+**	lst_path.c
 */
 
 t_path				*ft_lst_path_new(int *way, int max);
@@ -132,25 +144,19 @@ void				ft_lst_path_pushback(t_path **begin, t_path *to_add);
 void				ft_change_place(t_path *a, t_path *b);
 
 /*
-**	testing file
-*/
-
-void				print_values(t_path ***back);
-
-/*
-**	ft_search_ways
+**	search_ways
 */
 
 void				ft_search_ways(t_data *data, t_path **ways);
 
 /*
-**	ft_search_best_ways.c
+**	search_best_ways.c
 */
 
 t_path				***ft_search_best_ways(t_path *ways, t_data *data);
 
 /*
-**	ft_verify_link.c
+**	verify_link.c
 */
 
 t_bool				ft_corrects_links(t_data *data, t_lst *lst);

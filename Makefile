@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+         #
+#    By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/25 16:13:40 by abezanni          #+#    #+#              #
-#    Updated: 2018/06/23 16:29:00 by abezanni         ###   ########.fr        #
+#    Updated: 2018/06/24 15:35:11 by ccoupez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,15 +18,17 @@ SRC = $(addprefix src/,$(SRC_NAME))
 
 PARSE =		check_double_rooms.c\
 			check_links.c\
+			check_option.c\
 			check_rooms.c\
+			cmd.c\
 			parse.c\
+			verify_link.c\
 
 ALGO =		check_opti_way.c\
 			resolve.c \
 			search_best_ways.c\
 			search_ways.c\
 			send_ant.c\
-			verify_link.c\
 
 STRUCT =	free_struct.c\
 			lst_path.c\

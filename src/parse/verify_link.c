@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_verify_link.c                                   :+:      :+:    :+:   */
+/*   verify_link.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/06 14:21:05 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/06 14:21:16 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/24 15:10:56 by ccoupez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ t_bool	ft_corrects_links(t_data *data, t_lst *lst)
 	{
 		if (data->option & 1)
 			ft_putendl(lst->str);
-		if (!(ft_verif_links_names(data->rooms, data->nb_rooms, lst->str)))
+		if (*(lst->str) != '#'
+			&& !(ft_verif_links_names(data->rooms, data->nb_rooms, lst->str)))
 			return (FALSE);
 		lst = lst->next;
 	}

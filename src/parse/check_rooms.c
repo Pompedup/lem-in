@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_check_rooms.c                                   :+:      :+:    :+:   */
+/*   check_rooms.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abezanni <abezanni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ccoupez <ccoupez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/30 12:33:23 by abezanni          #+#    #+#             */
-/*   Updated: 2018/06/23 13:24:32 by abezanni         ###   ########.fr       */
+/*   Updated: 2018/06/24 16:03:58 by ccoupez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,24 @@ t_bool	ft_create_room(char *str, int i_r, t_room **room)
 **  Compte le nombre de salles
 */
 
-int		ft_count_rooms(t_lst *lst)
+int		ft_count_rooms(t_lst *lst, int option)
 {
 	int		nbr_rooms;
-
+	t_lst	*save;
+	
 	nbr_rooms = 0;
-	while (lst && (
-		ft_nbr_words_charset(lst->str, " \t") == 3 || *lst->str == '#'))
+	save = lst;
+	while (lst && (*lst->str == '#'
+		|| (ft_nbr_words_charset(lst->str, " \t") == 3)))
 	{
 		if (*lst->str != '#')
 			nbr_rooms++;
 		lst = lst->next;
+	}
+	while (option & 1 && nbr_rooms < 2 && lst->next != save)
+	{
+		ft_putendl(save->str);
+		save = save->next;
 	}
 	return (nbr_rooms);
 }
@@ -99,7 +106,7 @@ t_bool	ft_init_rooms(t_data *data, t_lst **lst)
 		return (FALSE);
 	if (!(data->end = ft_tab_start_end(*lst, data->nb_end, 0)))
 		return (FALSE);
-	if ((data->nb_rooms = ft_count_rooms(*lst)) < 2)
+	if ((data->nb_rooms = ft_count_rooms(*lst, data->option)) < 2)
 	{
 		data->nb_rooms = 0;
 		return (FALSE);
@@ -122,8 +129,8 @@ t_bool	ft_check_rooms(t_data *data, t_lst **lst)
 	i = 0;
 	while (i < data->nb_rooms)
 	{
-		if (data->option & 1)
-			ft_putendl((*lst)->str);
+		if (!cmd_valide(data, *lst, i))
+			return (FALSE);
 		if ((*lst)->type >= 0)
 		{
 			if (!ft_create_room((*lst)->str, i, data->rooms))
